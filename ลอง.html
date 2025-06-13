@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ภาคเหนือ</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.12.0/framer-motion.umd.min.js">
+    </script>
+    <style>
+    @font-face{
+        font-family: font1; 
+        src: url(Krub-Light.ttf);
+      }
+    @font-face{
+        font-family: font2; 
+        src: url(TorsilpChaiDiMak.ttf);
+      }
+    @font-face{
+        font-family: font3; 
+        src: url(PhakchiThin-Regular.ttf);
+      }
+    h1 {
+          font-family: font1;
+          font-size: 30px;
+          margin: 0;
+          padding: 10px 20px;
+      }
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('imgtest/bg5.5.png');
+        background-size:100%;
+        background-position: top;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        width: 100vw;
+        overflow-x: hidden;
+        justify-content: center;    
+    }
+
+    .menu-bar {
+        background-color: transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 100 100;
+        padding: 0px 20px;
+        box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.41);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 20;
+      }
+
+      .menu-bar1 {
+        background-color: transparent;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 75%;
+        border-radius: 20px;
+        margin: 0 auto;
+        padding: 5px 0px;
+        box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.41);
+        position: relative; /* ทำให้มันอยู่ด้านบน */
+        z-index: 20; /* ให้สูงกว่าพวก menu-bar12-4 */
+        flex-direction: column;
+        text-align: center;
+      }
+
+      button {
+        border: none;
+        background-color: transparent;
+        outline: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        min-width: 120px; /* ปรับขนาดให้คลิกง่ายขึ้น */
+        min-height: 50px; 
+        border-radius: 10px; /* ทำให้ดูสวยขึ้น */
+      }
+
+      button span {
+        font-size: 35px;
+        font-family: font2;
+        color: white;
+      }
+      .item1 {
+        font-size: 35px;
+        font-family: font3;
+        color: rgb(0, 0, 0);
+      }
+      .item2 {
+        font-size: 35px;
+        font-family: font2;
+        color: rgb(255, 255, 255);
+      }
+
+      .เชียงราย {margin-top: 8%; margin-left: 952px;} .เชียงใหม่ {margin-left: 802px; margin-top: -155px;} .แม่ฮ่องสอน {margin-top: -332px; margin-left: 720px;} .ลำพูน {margin-left: 879.5px; margin-top: -150px;} .ลำปาง {margin-left: 905px; margin-top: -265px;} .พะเยา {margin-left: 1003px; margin-top: -331px;} .แพร่ {margin-left: 968px; margin-top: -10px;} .น่าน {margin-left: 1079px; margin-top: -261px;} .อุตรดิตถ์ {margin-left: 1031px; margin-top: -63px;}
+      
+      @keyframes fadeEffect {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes fadeOutEffect {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes bounceUp {
+        0% { transform: translateY(0); opacity: 0.5; }
+        50% { transform: translateY(-20px); opacity: 1; }
+        100% { transform: translateY(-10px); opacity: 1; }
+    }
+
+    @keyframes bounceDown {
+        0% { transform: translateY(-10px); opacity: 1; }
+        100% { transform: translateY(0); opacity: 0.5; }
+    }
+
+    .info-box {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 2%;
+      text-align: center;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .info-box.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .เชียงราย, .เชียงใหม่, .แม่ฮ่องสอน, .ลำพูน, .ลำปาง, .พะเยา, .แพร่, .น่าน, .อุตรดิตถ์ {
+        transition: transform 0.3s ease
+    }
+
+    .province img {
+      opacity: 0.5;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .active img {
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+
+    .bounce-up img {
+        opacity: 1;
+    }
+
+    .bounce-down img {
+        opacity: 0.5;
+    }
+    .container {
+      position: relative;
+      width: 900px;
+      height: 500px;
+    }
+
+    .img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      transition: transform 0.5s, opacity 0.5s, left 0.5s;
+      cursor: pointer;
+    }
+
+    .imgIn {
+      max-width: 300px;
+      max-height: 200px;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-left: 30px;
+    }
+
+    .text-box {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+      background-color: white;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* จุดนำ */
+    .indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 15px;
+      height: 15px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background-color: #ccc;
+      transition: background-color 0.3s;
+    }
+
+    .dot.active {
+      background-color: #555;
+    }
+    .box {
+      height: 50px;
+      background-color: transparent;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      font-family: font2;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+      padding: 0 10px; 
+    }
+
+    .buttons-container {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.9);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .buttons-container.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .buttons-container a {
+      margin-top: -5%;
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      font-family: font2;
+      transition: background-color 0.2s, transform 0.1s ease;
+    }
+
+    .buttons-container a:active {
+      transform: scale(0.95);
+    }
+
+    .card {
+      display: flex;
+      align-items: flex-start;
+      width: 70%;
+      overflow: hidden;
+      margin: 20px auto;
+      font-family: font1;
+      font-size: 18px;
+    }
+
+    .card img {
+      width: 400px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .card .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .card-container {
+      width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* ระยะห่างระหว่างกล่อง */
+    }
+    .image-block {
+      display: flex;
+      align-items: center;
+      margin-left: 5%;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+    .image-block img {
+      width: 600px;
+      height: 400px;
+      border-radius: 8px;
+      margin-right: 0px; /* ระยะห่างระหว่างรูปกับข้อความ */
+    }
+    .image-block .text {
+      flex: 1;
+      max-width: 700px;
+      font-size: 18px;
+      margin-left: 5%;
+      font-family: font1;
+      color: #333;
+    }
+    </style>
+
+<script>
+  function fadeEffectButton(buttonId) {
+    let btn = document.getElementById(buttonId);
+    btn.style.animation = "none";
+    void btn.offsetWidth;  
+    btn.style.animation = "fadeEffect 0.5s ease";
+  }
+
+  function animateAndRedirect(event, url, buttonId) {
+    event.preventDefault(); // ป้องกันการเปลี่ยนหน้าทันที
+    let btn = document.getElementById(buttonId);
+    btn.style.animation = "none"; 
+    void btn.offsetWidth; 
+    btn.style.animation = "fadeEffect 0.5s ease"; 
+    
+    setTimeout(() => {
+        window.location.href = url; // เปลี่ยนหน้าหลังอนิเมชันจบ
+    }, 500); // รอ 0.5 วินาที (ต้องตรงกับ animation duration)
+
+}
+
+let activeProvince = null; // เก็บค่าอันที่กำลังเปิดอยู่
+
+function toggleProvince(provinceClass, infoId) {
+let imgElement = document.querySelector('.' + provinceClass);
+let infoBox = document.getElementById(infoId);
+
+// ถ้ามีอันที่ active อยู่ ให้ปิดก่อน
+if (activeProvince && activeProvince !== imgElement) {
+activeProvince.classList.remove('active');
+let oldInfoId = activeProvince.getAttribute('data-info-id');
+let oldInfoBox = document.getElementById(oldInfoId);
+oldInfoBox.classList.remove('show');
+setTimeout(() => oldInfoBox.style.display = 'none', 500); // ซ่อนหลัง animation
+}
+
+if (activeProvince === imgElement) {
+imgElement.classList.remove('active');
+infoBox.classList.remove('show');
+setTimeout(() => infoBox.style.display = 'none', 500);
+activeProvince = null;
+} else {
+imgElement.classList.add('active');
+infoBox.style.display = 'block';
+setTimeout(() => infoBox.classList.add('show'), 10);
+activeProvince = imgElement;
+activeProvince.setAttribute('data-info-id', infoId);
+}
+}
+window.onload = function () {
+  document.querySelectorAll(".container").forEach((container, containerIndex) => {
+    let images = Array.from(container.querySelectorAll(".img"));
+    let indicatorsContainer = container.parentElement.querySelector(".indicators");
+    let textBoxes = Array.from(container.parentElement.querySelectorAll(".text-box"));
+
+    const messages = [
+      "ข้อความของรูปภาพที่ 1",
+      "ข้อความของรูปภาพที่ 2",
+      "ข้อความของรูปภาพที่ 3",
+      "ข้อความของรูปภาพที่ 4",
+      "ข้อความของรูปภาพที่ 5"
+    ];
+
+    // สร้าง indicators
+    images.forEach(() => {
+      let dot = document.createElement("div");
+      dot.classList.add("dot");
+      indicatorsContainer.appendChild(dot);
+    });
+
+    let dots = Array.from(indicatorsContainer.querySelectorAll(".dot"));
+
+    function updateImages() {
+      images.forEach((img, index) => {
+        img.style.zIndex = images.length - index;
+        if (index === 0) {
+          img.style.opacity = "1";
+          img.style.transform = "scale(1)";
+          img.style.left = "0";
+        } else if (index === 1) {
+          img.style.opacity = "0.5";
+          img.style.transform = "scale(0.9)";
+          img.style.left = "20%";
+        } else if (index === 2) {
+          img.style.opacity = "0.4";
+          img.style.transform = "scale(0.85)";
+          img.style.left = "40%";
+        } else if (index === 3) {
+          img.style.opacity = "0.4";
+          img.style.transform = "scale(0.85)";
+          img.style.left = "-40%";
+        } else if (index === 4) {
+          img.style.opacity = "0.5";
+          img.style.transform = "scale(0.9)";
+          img.style.left = "-20%";
+        }
+      });
+
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[images.indexOf(container.querySelector(".img"))].classList.add("active");
+
+      // ซ่อนกล่องข้อความทั้งหมดของ container นี้
+      textBoxes.forEach(box => (box.style.display = "none"));
+    }
+
+    function rotateImages(direction) {
+      if (direction === "right") {
+        let lastImage = images.pop();
+        images.unshift(lastImage);
+      } else {
+        let firstImage = images.shift();
+        images.push(firstImage);
+      }
+      updateImages();
+    }
+
+    images.forEach((img, imgIndex) => {
+      img.addEventListener("click", function () {
+        let clickedIndex = images.indexOf(this);
+
+        // ถ้าคลิกที่รูปเดียวกันแล้ว (เคยแสดงข้อความอยู่แล้ว) จะซ่อนข้อความ
+        if (textBoxes[imgIndex].style.display === "block") {
+          textBoxes[imgIndex].style.display = "none"; // ซ่อนข้อความ
+        } else {
+          // ซ่อนกล่องข้อความอื่น ๆ ของ container นี้
+          textBoxes.forEach(box => (box.style.display = "none"));
+
+          // แสดงกล่องข้อความของรูปนี้
+          let textBox = textBoxes[imgIndex];
+          textBox.style.display = "block";
+        }
+
+        // หมุนรูปภาพเหมือนเดิม
+        if (clickedIndex > 2) {
+          rotateImages("right");
+        } else if (clickedIndex > 0) {
+          rotateImages("left");
+        }
+      });
+    });
+
+    updateImages();
+  });
+};
+
+function toggleButtons() {
+      const container = document.getElementById('buttons');
+      container.classList.toggle('show');
+    }
+
+</script>
+</head>
+<body>
+  <div class="province เชียงราย"><img src="imgจังหวัดเหนือ/เชียงราย.png" alt=""></div>
+<br><br>
+<nav class="menu-bar1">
+<div>
+    <button onclick="toggleProvince('เชียงราย', 'info-เชียงราย')">เชียงราย</button>
+</div>
+</nav>
+<div id="info-เชียงราย" class="info-box">
+  <nav class="menu-bar1">
+   <h1>ที่เที่ยว</h1>
+  </nav>
+   <center><div class="container">
+     <img src="imgเหนือ/bgที่เที่ยวเชียงราย1.jpg" class="img" />
+     <img src="imgเหนือ/bgที่เที่ยวเชียงราย2.jpg" class="img" />
+     <img src="imgเหนือ/bgที่เที่ยวเชียงราย3.jpg" class="img" />
+     <img src="imgเหนือ/bgที่เที่ยวเชียงราย4.jpg" class="img" />
+     <img src="imgเหนือ/bgที่เที่ยวเชียงราย5.jpg" class="img" />
+   </div>
+   <div class="text-box"><h1>วัดร่องขุ่น</h1>
+     <div class="card">
+       <img src="imgเหนือ/bgที่เที่ยวเชียงราย1.1.jpg" />
+       <div class="content">
+       <p>เป็นวัดพุทธ ตั้งอยู่ที่ ตำบลป่าอ้อดอนชัย อำเภอเมืองเชียงราย จังหวัดเชียงราย 57000 เปิดและปิดเวลา 8.00 - 17.00 น.ของทุกวัน <br> ออกแบบและก่อสร้างโดย เฉลิมชัย โฆษิตพิพัฒน์ ตั้งแต่ พ.ศ. 2540 จนถึงปัจจุบัน โดยเฉลิมชัยคาดว่างานก่อสร้างวัดร่องขุ่นจะไม่เสร็จลงภายในช่วงชีวิตของตนวัดร่องขุ่นถอดแบบมาจากวัดมิ่งเมือง จังหวัดน่าน <br>เมื่อวันที่ 5 พฤษภาคม พ.ศ. 2557 เวลา 18.05 น. เกิดแผ่นดินไหวขนาด 6.3 มีศูนย์กลางอยู่ที่อำเภอแม่ลาว จังหวัดเชียงราย และแผ่นดินไหวตามหลายครั้ง สร้างความเสียหายให้กับวัดร่องขุ่นเป็นอย่างมาก เช่น ผนังโบสถ์ปูนกระเทาะออก กระเบื้องหลุด ยอดพระธาตุหัก ภาพเขียนเสียหายหมด ทำให้ต้องปิดวัดเพื่อซ่อมแซมตั้งแต่วันที่ 6 พฤษภาคม ปีเดียวกัน <br> <a href="https://www.google.com/maps/place/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%A3%E0%B9%88%E0%B8%AD%E0%B8%87%E0%B8%82%E0%B8%B8%E0%B9%88%E0%B8%99/@19.8237553,99.7604383,17z/data=!4m10!1m2!2m1!1z4Lin4Lix4LiU4Lij4LmI4Lit4LiH4LiC4Li44LmI4LiZ!3m6!1s0x30d70e54b2e18761:0xb3495716c9ffd4ac!8m2!3d19.8242337!4d99.7633179!15sCiHguKfguLHguJTguKPguYjguK3guIfguILguLjguYjguJmSARBwbGFjZV9vZl93b3JzaGlwqgFMEAEyHxABIhvU24Jr_kPHuj7Ud05TBUTIM_N6R4pz3E-Gl5gyJxACIiPguKfguLHguJQg4Lij4LmI4Lit4LiHIOC4guC4uOC5iOC4meABAA!16s%2Fg%2F11ckzc6zmw?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+     </div></div></div>
+
+   <div class="text-box"><h1>สิงค์ปาร์ค</h1>
+     <div class="card">
+       <img src="imgเหนือ/bgที่เที่ยวเชียงราย2.1.jpg" />
+       <div class="content">
+       <p>ไร่สวยที่มีลักษณะเหมือนฟาร์ม มีไร่ชา สวนผลไม้ ทางเดิน รถราง และฟาร์มสัตว์ ตั้งอยู่ที่ 99 ตำบล แม่กรณ์ อำเภอเมืองเชียงราย เชียงราย 57000 เปิดและปิดเวลา 8.30 - 17.00 น.ของทุกวัน <br> เป็นแหล่งท่องเที่ยวเชิงเกษตร มีพื้นที่เกษตรกรรม ไร่ชา และธรรมชาติที่สวยงามในพื้นที่กว่า 12.8 ตารางกิโลเมตร ในช่วงฤดูหนาวมีทุ่งดอกคอสมอส ทุ่งปอเทือง และผลไม้ เช่น สตรอว์เบอร์รี พุทราพันธุ์ซื่อหมี่ และชาสูตรพิเศษนานาชนิดที่เป็นสูตรเฉพาะจากไร่
+
+         นอกจากนี้ยังมีกิจกรรมให้เช่าจักรยานปั่นภายในไร่ การโหนซิปไลน์ ชมไร่ชาในมุมสูงรอบทิศ 360 องศา รถรางบริการนำเที่ยวชมในไร่ตามจุดต่าง ๆ และให้อาหารสัตว์ เช่น ยีราฟ ม้าลาย อย่างใกล้ชิด ระยะเวลาเที่ยวชม 1 ชั่วโมง ให้บริการทุก 30 นาที <a href="https://www.google.com/maps/place/%E0%B8%AA%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B9%8C%E0%B8%9B%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%84%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B8%A3%E0%B8%B2%E0%B8%A2/@19.8530809,99.7334942,16z/data=!4m10!1m2!2m1!1z4Liq4Li04LiH4Lir4LmM4Lib4Liy4Lij4LmM4LiEIOC5gOC4iuC4teC4ouC4h-C4o-C4suC4og!3m6!1s0x30d70feb0e464e53:0xeeb653eaf54e130e!8m2!3d19.8530809!4d99.7430214!15sCjfguKrguLTguIfguKvguYzguJvguLLguKPguYzguIQg4LmA4LiK4Li14Lii4LiH4Lij4Liy4LiiWjoiOOC4quC4tOC4h-C4q-C5jCDguJvguLLguKPguYzguIQg4LmA4LiK4Li14Lii4LiH4Lij4Liy4LiikgESdG91cmlzdF9hdHRyYWN0aW9uqgFgEAEyHhABIhpvxRzy6QVxvRyDC9st9j8AGKO14GX9sybydDI8EAIiOOC4quC4tOC4h-C4q-C5jCDguJvguLLguKPguYzguIQg4LmA4LiK4Li14Lii4LiH4Lij4Liy4Lii4AEA!16s%2Fg%2F11b637_5y8?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+     </div></div></div>
+
+   <div class="text-box"><h1>ภูชี้ฟ้า</h1>
+     <div class="card">
+       <img src="imgเหนือ/bgที่เที่ยวเชียงราย3.1.jpg" />
+       <div class="content">
+       <p>ตั้งอยู่ที่ตำบลตับเต่า อำเภอเทิง จังหวัดเชียงราย เป็นสถานที่ท่องเที่ยวที่มีชื่อเสียงในจังหวัดเชียงราย อยู่ในเขตป่าสงวนแห่งชาติ ป่าแม่อิงฝั่งขวาและป่าแม่งาว ฟ้าทอง มีพื้นที่ประมาณ 58,069 ไร่ ใน 4 อำเภอ ของ จ.เชียงราย ได้แก่ อ.เชียงของ เวียงแก่น ขุนตาล และเทิง <br> โดยกรมป่าไม้ได้มีคำสั่งจัดตั้งเป็นวนอุทยาน เมื่อวันที่ 6 กุมภาพันธ์ พ.ศ. 2541 พื้นที่วนอุทยานเป็นยอดเขาสูงในเทือกเขาดอยผาหม่น ติดชายแดนไทยและสาธารณรัฐประชาธิปไตยประชาชนลาว <br> ภูชี้ฟ้า ตั้งอยู่บนเทือกเขาสูงทางตะวันออกของจังหวัดเชียงราย อยู่ระหว่างรอยตะเข็บชายแดนไทย–ลาว ลักษณะเป็นหน้าผาสูงเป็นแนวยาวไปตามแนวชายแดน บริเวณปลายสุดของหน้าผามีลักษณะแหลมคล้ายกับนิ้วมือชี้ยื่นออกไปในอากาศ จึงเป็นที่มาของชื่อ "ภูชี้ฟ้า" จุดที่สูงสุดของภูชี้ฟ้าอยู่สูงจากระดับน้ำทะเลปานกลาง 1,200 ถึง 1,628 เมตร เบื้องล่างของหน้าผาเป็นแอ่งหุบเขา เป็นที่ตั้งของหมู่บ้านเชียงตอง แขวงไชยบุรี ประเทศลาว<a href="https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%AB%E0%B9%88%E0%B8%87%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B8%A0%E0%B8%B9%E0%B8%8A%E0%B8%B5%E0%B9%89%E0%B8%9F%E0%B9%89%E0%B8%B2/@19.8505752,100.4435892,15z/data=!4m14!1m7!3m6!1s0x30d7d01978dac17d:0x1d0100b2deabcfc0!2sPhu+Chifa!8m2!3d19.8505556!4d100.4538889!16s%2Fm%2F0j3gjyy!3m5!1s0x30d7d01d7347842b:0x1e5958bd3a8ded57!8m2!3d19.8500121!4d100.4460122!16s%2Fg%2F11h1mq482?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+     </div></div></div>
+
+   <div class="text-box"><h1>วัดห้วยปลากั้ง</h1>
+     <div class="card">
+       <img src="imgเหนือ/bgที่เที่ยวเชียงราย4.1.jpg" />
+       <div class="content">
+       <p>ตั้งอยู่ที่ 553 หมู่ที่ 3 549 หมู่3 ตำบล แม่ยาว อำเภอเมืองเชียงราย เชียงราย 57100 เปิดและปิดเวลา 7.00 - 21.00 น.ของทุกวัน <br> วัดห้วยปลากั้ง เป็นวัดราษฎร์สังกัดคณะสงฆ์ฝ่ายมหานิกาย ตั้งอยู่ในตำบลริมกก อำเภอเมืองเชียงราย จังหวัดเชียงราย มีเนื้อที่ประมาณ 15 ไร่ ตั้งอยู่บนเนินเขาลูกเล็ก ๆ ในชุมชนห้วยปลากั้ง วัดห้วยปลากั้งก่อตั้งขึ้นโดยพระอาจารย์ พบโชค ติสสะวังโส เจ้าอาวาส สภาพเดิม เป็นเนินเขาที่มีเพียงซากของวัดร้างและพงหญ้ารกชัฏ ต่อมาพระอาจารย์พบโชคซึ่งเป็นพระภิกษุจำพรรษาอยู่ที่วัดร่องธาร เชียงราย จึงมีจิตศรัทธาต้องการบูรณะ จึงได้ย้ายไปพำนักอยู่ครั้งแรกเมื่อวันที่ 19 พฤศจิกายน พ.ศ. 2548 โดยมีชาวชุมชนห้วยปลากั้งร่วมบูรณะ เริ่มจากการตั้งเป็นสำนักสงฆ์ จนได้รับอนุญาตตั้งวัดเมื่อวันที่ 24 กรกฎาคม พ.ศ. 2552 โดยมีพระอธิการพบโชค ติสฺสวํโส เป็นเจ้าอาวาสรูปแรก<a href="https://www.google.com/maps/place/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AB%E0%B9%89%E0%B8%A7%E0%B8%A2%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%81%E0%B8%B1%E0%B9%89%E0%B8%87/@19.9487796,99.8037232,17z/data=!4m10!1m2!2m1!1z4Lin4Lix4LiU4Lir4LmJ4Lin4Lii4Lib4Lil4Liy4LiB4Lix4LmJ4LiH!3m6!1s0x30d7069baaddba13:0x2c5a86908fd38ceb!8m2!3d19.9491994!4d99.8067097!15sCirguKfguLHguJTguKvguYnguKfguKLguJvguKXguLLguIHguLHguYnguIdaLyIt4Lin4Lix4LiUIOC4q-C5ieC4p-C4oiDguJvguKXguLIg4LiB4Lix4LmJ4LiHkgEPYnVkZGhpc3RfdGVtcGxlqgFVEAEyHhABIhqvoJh8d67pnhjKBFORem-s_lEySCKi15qjSjIxEAIiLeC4p-C4seC4lCDguKvguYnguKfguKIg4Lib4Lil4LiyIOC4geC4seC5ieC4h-ABAA!16s%2Fg%2F119vr_mj_?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+     </div></div></div>
+
+   <div class="text-box"><h1>ดอยช้าง</h1>
+     <div class="card">
+       <img src="imgเหนือ/bgที่เที่ยวเชียงราย5.1.jpg" />
+       <div class="content">
+       <p>ตั้งอยู่ที่ บ้านดอยช้าง ตั้งอยู่หมู่ที่ 3 ตำบลวาวี อำเภอแม่สรวย จังหวัดเชียงราย <br> จุดชมวิวดอยช้างอยู่สูงถึง 1,485 เมตร ด้านบนสามารถมองเห็นวิวได้โดยรอบ มีการจัดภูมิทัศน์ด้วยการปลูกแปลงดอกไม้และสวนสน อากาศเย็นสบายตลอดปี อุณหภูมิเฉลี่ย 18 องศาเซลเซียส <br>ดอยช้างมีชื่อเสียงในเรื่องของเป็นแหล่งปลูกกาแฟที่ใหญ่ที่สุดแห่งหนึ่งในประเทศไทย มาเที่ยวที่นี่ นักท่องเที่ยว จะได้ชมสวนกาแฟที่สุกอร่ามเต็มดอย พร้อมๆกับชมดอกซากุระหรือนางพญาเสือโคร่งที่กำลังบาน สีสันสดใส ชมพู อีกทั้งเพลินตา กับศิลปะวิถีชาวบ้าน
+         <br>  จุดชมวิวดอยช้างเป็นจุดชมพระอาทิตย์ตกที่สวยมากแห่งหนึ่ง<a href="https://www.google.com/maps/place/%E0%B8%94%E0%B8%AD%E0%B8%A2%E0%B8%8A%E0%B9%89%E0%B8%B2%E0%B8%87+%E0%B8%AD%E0%B8%B3%E0%B9%80%E0%B8%A0%E0%B8%AD%E0%B9%81%E0%B8%A1%E0%B9%88%E0%B8%AA%E0%B8%A3%E0%B8%A7%E0%B8%A2+%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B8%A3%E0%B8%B2%E0%B8%A2+57180/@19.8051194,99.507295,13z/data=!3m1!4b1!4m6!3m5!1s0x30d7161c486a3a6b:0x7ed2dc6ffd30651d!8m2!3d19.800321!4d99.5562219!16s%2Fg%2F11kpg9nxrt?entry=ttu&g_ep=EgoyMDI1MDUwNS4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+     </div></div></div>
+
+  <div class="container">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.jpg" class="img">
+    <img src="imgเหนือ/bgที่พักเชียงราง2.webp" class="img">
+  </div>
+  <div class="text-box"><h1>เลอ เมอริเดียน เชียงราย รีสอร์ท</h1><br>
+    <div class="image-block">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.1.webp" >
+    <div class="text">
+     <a href="" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+    </div>
+  </div>
+  <div class="image-block">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.2.jpg" style="margin-left: 30%;" >
+  </div>
+  <div class="image-block">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.3.webp"style="margin-left: 10%;">
+  </div>
+</div>
+
+  <div class="text-box"><h1>เลอ เมอริเดียน เชียงราย รีสอร์ท</h1><br>
+    <div class="image-block">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.1.webp" >
+    <div class="text">
+     <a href="" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+    </div>
+  </div>
+  <div class="image-block">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.2.jpg" style="margin-left: 30%;" >
+  </div>
+  <div class="image-block">
+    <img src="imgเหนือ/bgที่พักเชียงราย1.3.webp"style="margin-left: 10%;">
+  </div>
+</div>
+
+</body>
+</html>

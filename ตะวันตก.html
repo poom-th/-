@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ภาคตะวันตก</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.12.0/framer-motion.umd.min.js">
+    </script>
+    <style>
+    @font-face{
+        font-family: font1; 
+        src: url(Krub-Light.ttf);
+      }
+    @font-face{
+        font-family: font2; 
+        src: url(TorsilpChaiDiMak.ttf);
+      }
+    @font-face{
+        font-family: font3; 
+        src: url(PhakchiThin-Regular.ttf);
+      }
+      h1 {
+          font-family: font1;
+          font-size: 30px;
+          margin: 0;
+          padding: 10px 20px;
+      }
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-image: url('imgtest/bg5.5.png');
+        background-size:100%;
+        background-position: top;
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        width: 100vw;
+        overflow-x: hidden;
+        justify-content: center;    
+    }
+
+    .menu-bar {
+        background-color: transparent;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 100 100;
+        padding: 0px 20px;
+        box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.41);
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 20;
+      }
+      .menu-bar1 {
+        background-color: transparent;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 75%;
+        border-radius: 20px;
+        margin: 0 auto;
+        padding: 5px 0px;
+        box-shadow: 0px 10px 20px 5px rgba(0, 0, 0, 0.41);
+        position: relative; /* ทำให้มันอยู่ด้านบน */
+        z-index: 20; /* ให้สูงกว่าพวก menu-bar12-4 */
+        flex-direction: column;
+        text-align: center;
+      }
+
+      button {
+        border: none;
+        background-color: transparent;
+        outline: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        min-width: 120px; /* ปรับขนาดให้คลิกง่ายขึ้น */
+        min-height: 50px; 
+        border-radius: 10px; /* ทำให้ดูสวยขึ้น */
+      }
+
+      button span {
+        font-size: 35px;
+        font-family: font2;
+        color: white;
+      }
+
+      .item2 {
+        font-size: 35px;
+        font-family: font2;
+        color: rgb(255, 255, 255);
+      }
+
+      .ตาก {
+        margin-top: 8%;
+        margin-left: 850px;
+      }
+      .กาญจนบุรี {
+        margin-left: 901px;
+        margin-top: -48px;
+      }
+      .ราชบุรี {
+        margin-left: 1002px;
+        margin-top: -31px;
+      }
+      .เพชรบุรี {
+        margin-left: 1002px;
+        margin-top: -28px;
+      }
+      .ประจวบคีรีขันธ์ {
+        margin-left: 1013px;
+        margin-top: -19px;
+      }
+      @keyframes fadeEffect {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes fadeOutEffect {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.6; transform: scale(0.95); }
+        100% { opacity: 1; transform: scale(1); }
+      }
+
+      @keyframes bounceUp {
+        0% { transform: translateY(0); opacity: 0.5; }
+        50% { transform: translateY(-20px); opacity: 1; }
+        100% { transform: translateY(-10px); opacity: 1; }
+    }
+
+    @keyframes bounceDown {
+        0% { transform: translateY(-10px); opacity: 1; }
+        100% { transform: translateY(0); opacity: 0.5; }
+    }
+
+    .info-box {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 2%;
+      text-align: center;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .info-box.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ตาก, .กาญจนบุรี, .เพชรบุรี, .ราชบุรี, .ประจวบคีรีขันธ์ {
+        transition: transform 0.3s ease
+    }
+
+    .province img {
+      opacity: 0.5;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .active img {
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+
+    .bounce-up img {
+        opacity: 1;
+    }
+
+    .bounce-down img {
+        opacity: 0.5;
+    }
+    .container {
+      position: relative;
+      width: 900px;
+      height: 500px;
+    }
+
+    .img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      transition: transform 0.5s, opacity 0.5s, left 0.5s;
+      cursor: pointer;
+    }
+
+    .imgIn {
+      max-width: 300px;
+      max-height: 200px;
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      border-radius: 20px;
+      margin-left: 30px;
+    }
+
+    .text-box {
+      display: none;
+      text-align: center;
+      margin-top: 10px;
+      background-color: white;
+      padding: 10px;
+
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    /* จุดนำ */
+    .indicators {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .dot {
+      width: 15px;
+      height: 15px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background-color: #ccc;
+      transition: background-color 0.3s;
+    }
+
+    .dot.active {
+      background-color: #555;
+    }
+
+    .box {
+      height: 50px;
+      background-color: transparent;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      font-family: font2;
+      transition: background-color 0.3s;
+      white-space: nowrap;
+      padding: 0 10px; 
+    }
+
+    .buttons-container {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.9);
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .buttons-container.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .buttons-container a {
+      margin-top: -5%;
+      padding: 10px 15px;
+      color: white;
+      text-decoration: none;
+      font-size: 25px;
+      font-family: font2;
+      transition: background-color 0.2s, transform 0.1s ease;
+    }
+
+    .buttons-container a:active {
+      transform: scale(0.95);
+    }
+
+    .card {
+      display: flex;
+      align-items: flex-start;
+      width: 70%;
+      overflow: hidden;
+      margin: 20px auto;
+      font-family: font1;
+      font-size: 18px;
+    }
+
+    .card img {
+      width: 400px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+
+    .card .content {
+      padding: 15px;
+      flex: 1;
+    }
+
+    .card-container {
+      width: 600px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px; /* ระยะห่างระหว่างกล่อง */
+    }
+    .image-block {
+      display: flex;
+      align-items: center;
+      margin-left: 5%;
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+    .image-block img {
+      width: 600px;
+      height: 400px;
+      border-radius: 8px;
+      margin-right: 0px; /* ระยะห่างระหว่างรูปกับข้อความ */
+    }
+    .image-block .text {
+      flex: 1;
+      max-width: 700px;
+      font-size: 18px;
+      margin-left: 5%;
+      font-family: font1;
+      color: #333;
+    }
+    </style>
+
+<script>
+  function fadeEffectButton(buttonId) {
+    let btn = document.getElementById(buttonId);
+    btn.style.animation = "none";
+    void btn.offsetWidth;  
+    btn.style.animation = "fadeEffect 0.5s ease";
+  }
+
+  function animateAndRedirect(event, url, buttonId) {
+    event.preventDefault(); // ป้องกันการเปลี่ยนหน้าทันที
+    let btn = document.getElementById(buttonId);
+    btn.style.animation = "none"; 
+    void btn.offsetWidth; 
+    btn.style.animation = "fadeEffect 0.5s ease"; 
+    
+    setTimeout(() => {
+        window.location.href = url; // เปลี่ยนหน้าหลังอนิเมชันจบ
+    }, 500); // รอ 0.5 วินาที (ต้องตรงกับ animation duration)
+
+}
+
+let activeProvince = null; // เก็บค่าอันที่กำลังเปิดอยู่
+
+function toggleProvince(provinceClass, infoId) {
+let imgElement = document.querySelector('.' + provinceClass);
+let infoBox = document.getElementById(infoId);
+
+// ถ้ามีอันที่ active อยู่ ให้ปิดก่อน
+if (activeProvince && activeProvince !== imgElement) {
+activeProvince.classList.remove('active');
+let oldInfoId = activeProvince.getAttribute('data-info-id');
+let oldInfoBox = document.getElementById(oldInfoId);
+oldInfoBox.classList.remove('show');
+setTimeout(() => oldInfoBox.style.display = 'none', 500); // ซ่อนหลัง animation
+}
+
+if (activeProvince === imgElement) {
+imgElement.classList.remove('active');
+infoBox.classList.remove('show');
+setTimeout(() => infoBox.style.display = 'none', 500);
+activeProvince = null;
+} else {
+imgElement.classList.add('active');
+infoBox.style.display = 'block';
+setTimeout(() => infoBox.classList.add('show'), 10);
+activeProvince = imgElement;
+activeProvince.setAttribute('data-info-id', infoId);
+}
+}
+window.onload = function () {
+  document.querySelectorAll(".container").forEach((container, containerIndex) => {
+    let images = Array.from(container.querySelectorAll(".img"));
+    let indicatorsContainer = container.parentElement.querySelector(".indicators");
+    let textBoxes = Array.from(container.parentElement.querySelectorAll(".text-box"));
+
+    const messages = [
+      "ข้อความของรูปภาพที่ 1",
+      "ข้อความของรูปภาพที่ 2",
+      "ข้อความของรูปภาพที่ 3",
+      "ข้อความของรูปภาพที่ 4",
+      "ข้อความของรูปภาพที่ 5"
+    ];
+
+    // สร้าง indicators
+    images.forEach(() => {
+      let dot = document.createElement("div");
+      dot.classList.add("dot");
+      indicatorsContainer.appendChild(dot);
+    });
+
+    let dots = Array.from(indicatorsContainer.querySelectorAll(".dot"));
+
+    function updateImages() {
+      images.forEach((img, index) => {
+        img.style.zIndex = images.length - index;
+        if (index === 0) {
+          img.style.opacity = "1";
+          img.style.transform = "scale(1)";
+          img.style.left = "0";
+        } else if (index === 1) {
+          img.style.opacity = "0.5";
+          img.style.transform = "scale(0.9)";
+          img.style.left = "20%";
+        } else if (index === 2) {
+          img.style.opacity = "0.4";
+          img.style.transform = "scale(0.85)";
+          img.style.left = "40%";
+        } else if (index === 3) {
+          img.style.opacity = "0.4";
+          img.style.transform = "scale(0.85)";
+          img.style.left = "-40%";
+        } else if (index === 4) {
+          img.style.opacity = "0.5";
+          img.style.transform = "scale(0.9)";
+          img.style.left = "-20%";
+        }
+      });
+
+      dots.forEach(dot => dot.classList.remove("active"));
+      dots[images.indexOf(container.querySelector(".img"))].classList.add("active");
+
+      // ซ่อนกล่องข้อความทั้งหมดของ container นี้
+      textBoxes.forEach(box => (box.style.display = "none"));
+    }
+
+    function rotateImages(direction) {
+      if (direction === "right") {
+        let lastImage = images.pop();
+        images.unshift(lastImage);
+      } else {
+        let firstImage = images.shift();
+        images.push(firstImage);
+      }
+      updateImages();
+    }
+
+    images.forEach((img, imgIndex) => {
+      img.addEventListener("click", function () {
+        let clickedIndex = images.indexOf(this);
+
+        // ถ้าคลิกที่รูปเดียวกันแล้ว (เคยแสดงข้อความอยู่แล้ว) จะซ่อนข้อความ
+        if (textBoxes[imgIndex].style.display === "block") {
+          textBoxes[imgIndex].style.display = "none"; // ซ่อนข้อความ
+        } else {
+          // ซ่อนกล่องข้อความอื่น ๆ ของ container นี้
+          textBoxes.forEach(box => (box.style.display = "none"));
+
+          // แสดงกล่องข้อความของรูปนี้
+          let textBox = textBoxes[imgIndex];
+          textBox.style.display = "block";
+        }
+
+        // หมุนรูปภาพเหมือนเดิม
+        if (clickedIndex > 2) {
+          rotateImages("right");
+        } else if (clickedIndex > 0) {
+          rotateImages("left");
+        }
+      });
+    });
+
+    updateImages();
+  });
+};
+
+function toggleButtons() {
+      const container = document.getElementById('buttons');
+      container.classList.toggle('show');
+    }
+
+</script>
+</head>
+<body>
+    <nav class="menu-bar">
+        <div>
+          <button id="button1" onclick="animateAndRedirect(event, 'http://127.0.0.1:5500/%E0%B8%AB%E0%B8%99%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%81.html', 'button1')">
+            <span class="item2">
+                หน้าหลัก
+            </span>
+        </button>
+          <button id="button2" onclick="fadeEffectButton('button2')">
+            <div class="box" onclick="toggleButtons()">ภูมิภาคอื่นๆ</div>
+          </button>
+          <div class="buttons-container" id="buttons">
+            <a href="http://127.0.0.1:5500/%E0%B8%A0%E0%B8%B2%E0%B8%84/%E0%B9%80%E0%B8%AB%E0%B8%99%E0%B8%B7%E0%B8%AD.html">ภาคเหนือ</a>
+            <a href="http://127.0.0.1:5500/%E0%B8%A0%E0%B8%B2%E0%B8%84/%E0%B8%81%E0%B8%A5%E0%B8%B2%E0%B8%87.html">ภาคกลาง</a>
+            <a href="http://127.0.0.1:5500/%E0%B8%A0%E0%B8%B2%E0%B8%84/%E0%B8%95%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%AD%E0%B8%AD%E0%B8%81.html">ภาคตะวันออก</a>
+            <a href="http://127.0.0.1:5500/%E0%B8%A0%E0%B8%B2%E0%B8%84/%E0%B8%AD%E0%B8%B5%E0%B8%AA%E0%B8%B2%E0%B8%99.html">ภาคตะวันออกเฉียงเหนือ</a>
+            <a href="http://127.0.0.1:5500/%E0%B8%A0%E0%B8%B2%E0%B8%84/%E0%B9%83%E0%B8%95%E0%B9%89.html">ภาคใต้</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="province ตาก"><img src="imgจังหวัดตะวันตก/ตาก.png" alt=""></div>
+      <div class="province กาญจนบุรี"><img src="imgจังหวัดตะวันตก/กาญจนบุรี.png" alt=""></div>
+      <div class="province ราชบุรี"><img src="imgจังหวัดตะวันตก/ราชบุรี.png" alt=""></div>
+      <div class="province เพชรบุรี"><img src="imgจังหวัดตะวันตก/เพชรบุรี.png" alt=""></div>
+      <div class="province ประจวบคีรีขันธ์"><img src="imgจังหวัดตะวันตก/ประจวบคีรีขันธ์.png" alt=""></div>
+      <br><br>
+<nav class="menu-bar1">
+  <div>
+      <button onclick="toggleProvince('กาญจนบุรี', 'info-กาญจนบุรี')">กาญจนบุรี</button>
+      <button onclick="toggleProvince('ตาก', 'info-ตาก')">ตาก</button>
+      <button onclick="toggleProvince('ประจวบคีรีขันธ์', 'info-ประจวบคีรีขันธ์')">ประจวบคีรีขันธ์</button>
+      <button onclick="toggleProvince('เพชรบุรี', 'info-เพชรบุรี')">เพชรบุรี</button>
+      <button onclick="toggleProvince('ราชบุรี', 'info-ราชบุรี')">ราชบุรี</button>
+  </div>
+</nav>
+      <div id="info-กาญจนบุรี" class="info-box">
+        <nav class="menu-bar1">
+          <h1>ที่เที่ยว</h1>
+         </nav>
+          <center><div class="container">
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี1.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี2.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี3.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี4.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี5.png" class="img" />
+          </div>
+        <div class="text-box"><h1>ถํ้าระแซ ทางรถไฟสายมรณะ</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี1.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ บ้านวังโพธิ์ หมู่1 ตำบลลุ่มสุ่ม อำเภอไทรโยค จังหวัดกาญจนบุรี 71150 <br> หลังจากรถไฟเทียบชานชาลาที่ สถานี ถ้ำกระแซ กาญจนบุรี ความตื่นเต้นที่หายไปนานด้วยความวุ่นวายในเมืองใหญ่ ได้กลับมาให้หัวใจได้เต้นตูมตามอีกครั้ง กลิ่นใบไม้ ใบหญ้า กลิ่นดินจากความสดชื่นของป่าใหญ่อันดับต้นๆ ของเมืองไทยช่วยดีท็อกซ์ความเหนื่อยล้าให้หายเป็นปลิดทิ้ง <br>   หลังจากรถไฟทิ้งสถานีมุ่งหน้าเดินทางต่อไป ความคึกครื้นของนักท่องเที่ยวทั้งไทย และต่างชาติก็เริ่มกลับมา เราเดินมุ่งหน้าไปที่ ถ้ำกระแซ ซึ่งถ้ำนี้เคยเป็น ที่พักของเชลยศึก เมื่อครั้งสร้างเส้นทางรถไฟสายมรณะจากไทยไปพม่า และภายในถ้ำยังมี พระพุทธรูปศักดิ์สิทธิ์ ประดิษฐานอยู่ด้วย ความรู้สึกขนลุกอย่างบอกไม่ถูกเมื่อได้ไปเหยียบสถานที่ที่ครั้งหนึ่งเคยอยู่ในหน้าประวัติศาสตร์โลก
+              <a href="https://www.google.com/maps/place/%E0%B8%96%E0%B9%89%E0%B8%B3%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%81%E0%B8%8B/@14.1060744,99.1657461,17z/data=!3m1!4b1!4m6!3m5!1s0x30e4807490132f41:0xcbc4c6e60cbcd76b!8m2!3d14.1060744!4d99.1657461!16s%2Fg%2F1hm3d11nk?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ปราสาทเมืองสิงห์</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี2.1.webp" />
+            <div class="content">
+            <p>อุทยานประวัติศาสตร์เมืองสิงห์ เป็นอุทยานประวัติศาสตร์แห่งหนึ่งของประเทศไทยภายใต้การดูแลของกรมศิลปากร กระทรวงวัฒนธรรม ตั้งอยู่บนฝั่งแม่น้ำแควน้อยทางทิศเหนือในเขตตำบลสิงห์ อำเภอไทรโยค จังหวัดกาญจนบุรี แวดล้อมด้วยทิวเขาเป็นแนวยาวอยู่โดยรอบ เดิมปราสาทแห่งนี้มีชื่อปรากฏในจารึกปราสาทพระขรรค์ว่า ศรีชัยสิงห์ปุระ ลักษณะผังเมืองเป็นรูปสี่เหลี่ยมผืนผ้า กำแพงเมืองก่อด้วยศิลาแลง กว้างประมาณ 800 เมตร หมายถึงส่วนกว้างของเมือง ยาวประมาณ 850 เมตร และกำแพงสูง 7 เมตร มีประตูเข้าออก 4 ด้าน มีคูน้ำคันดินล้อมรอบ ภายในเมืองมีสระน้ำ 6 สระ  <br> ปราสาทเมืองสิงห์ มีจุดมุ่งหมายสร้างขึ้นเพื่อเป็นพุทธศาสนสถานในพุทธศาสนา นิกายมหายาน จากการขุดตกแต่งของกรมศิลปากรที่ค่อยทำค่อยไปตั้งแต่ พ.ศ. 2478 แต่มาเริ่มบุกเบิกกันจริงจังเมื่อ พ.ศ. 2517 แล้วเสร็จเป็นอุทยานประวัติศาสตร์เมื่อ พ.ศ. 2530 จึงสวยงามดังที่เห็นอยู่ในวันนี้ ปราสาทเมืองสิงห์นี้กล่าวว่าสถาปัตยกรรมและปฏิมากรรม คล้ายคลึงกับของสมัยพระเจ้าชัยวรมันที่ 7 (พ.ศ. 1720 - 1780) กษัตริย์นักสร้างปราสาทแห่งขอม จากการขุดแต่งของกรมศิลปากร พบศิลปกรรมที่สำคัญยิ่งคือพระพุทธรูปนาคปรก พระโพธิสัตว์อวโลกิเตศวร และ นางปรัชญาปารมิตา และยังพบรูปพระโพธิสัตว์อวโลกิเตศวรเปล่งรัศมีอีกองค์หนึ่ง รูปลักษณ์คล้ายกับที่พบในประเทศกัมพูชา ปัจจุบันกรมศิลปากรได้นำไปเก็บรักษาอยู่ที่พิพิธภัณฑสถานแห่งชาติ พระนคร แล้ว คงเหลือแต่องค์จำลองไว้
+              <a href="https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%B4%E0%B8%A8%E0%B8%B2%E0%B8%AA%E0%B8%95%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%B4%E0%B8%87%E0%B8%AB%E0%B9%8C/@14.0385184,99.2411327,17z/data=!4m10!1m2!2m1!1z4Lib4Lij4Liy4Liq4Liy4LiX4LmA4Lih4Li34Lit4LiH4Liq4Li04LiH4Lir4LmM!3m6!1s0x30e37ef2b5ec38e9:0x4d9940c6bd2199f0!8m2!3d14.0388411!4d99.2435012!15sCjDguJvguKPguLLguKrguLLguJfguYDguKHguLfguK3guIfguKrguLTguIfguKvguYxaNCIy4Lib4Lij4Liy4Liq4Liy4LiXIOC5gOC4oeC4t-C4reC4hyDguKrguLTguIfguKvguYySAQ1oaXN0b3JpY19zaXRlqgFbEAEyHxABIhsb7EfjDZMU_eZ2uB016FIfp_h4UafO2hUd5U0yNhACIjLguJvguKPguLLguKrguLLguJcg4LmA4Lih4Li34Lit4LiHIOC4quC4tOC4h-C4q-C5jOABAA!16zL20vMDU5N19o?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ถํ้าละว้า</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี3.1.webp" />
+            <div class="content">
+            <p>ถ้ำละว้า ตำบลวังกระแจะ อำเภอไทรโยค จังหวัดกาญจนบุรี เปิดและปิดเวลา 08.00 - 16.30 น.ของทุกวัน <br> เป็นถ้ำแห่งแรกๆ ของจังหวัด ที่ถูกค้นพบพร้อมกับโครงกระดูกมนุษย์โบราณในถ้ำ คาดเดากันว่าอาจเคยเป็นที่อยู่อาศัยของมนุษย์ยุคก่อนประวัติศาสตร์ ถ้ำนี้น่าจะมีอายุกว่า 3,000 ปี ชาวบ้านที่อาศัยอยู่บริเวณนี้ เป็นผู้ค้นพบถ้ำตั้งแต่ก่อนปี พ.ศ. 2496 ต่อมากรมศิลปากรก็ได้มาทําการขุดค้นภายในถ้ำ เลยทำให้พบโครงกระดูกมนุษย์ เครื่องประดับ เครื่องมือเครื่องใช้ และภาชนะดินเผาสมัยก่อนค่ะ แม้ว่าปากทางเข้าจะค่อนข้างเล็ก แต่ภายในถ้ำกลับใหญ่กว้างขวางมากเลยทีเดียว โดยจะแบ่งเป็นห้องต่างๆ แต่ละห้องก็จะมีลักษณะที่แตกต่างกันไป <br> ภายใน ถ้ำละว้า สามารถพบน้ำหยดจากเพดานถ้ำและน้ำไหลซึมจากพื้นได้เป็นเรื่องปกติ เพราะเป็นสิ่งหนึ่งที่บอกว่าถ้ำแห่งนี้ยังมีการก่อตัวและเปลี่ยนแปลงรูปร่างอยู่ตลอดๆ หยดน้ำเล็กๆ ด้านบนเพดานถ้ำนี้ จะมีฤทธิ์เป็นกรดอ่อนๆ เพราะผ่านมาทั้งอากาศ ดิน และสารอินทรีย์ต่างๆ เมื่อไหลผ่านหินปูนในถ้ำนี้ จะค่อยๆ แข็งตัวกลายเป็น หินย้อย และส่วนหนึ่งจะหยดลงและสะสมตัวอยู่ที่พื้นกลายเป็น หินงอก ที่เรารู้จักกันดีนั่นเอง
+              <a href="https://www.google.com/maps/place/%E0%B8%96%E0%B9%89%E0%B8%B3%E0%B8%A5%E0%B8%B0%E0%B8%A7%E0%B9%89%E0%B8%B2+%E0%B8%95%E0%B8%B3%E0%B8%9A%E0%B8%A5+%E0%B8%A7%E0%B8%B1%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B8%B0%E0%B9%81%E0%B8%88%E0%B8%B0+%E0%B8%AD%E0%B8%B3%E0%B9%80%E0%B8%A0%E0%B8%AD%E0%B9%84%E0%B8%97%E0%B8%A3%E0%B9%82%E0%B8%A2%E0%B8%84+%E0%B8%81%E0%B8%B2%E0%B8%8D%E0%B8%88%E0%B8%99%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5+71150/@14.3176255,98.936488,13z/data=!3m1!4b1!4m6!3m5!1s0x30e46f4571dadd71:0xce4b74254fcfe292!8m2!3d14.3154597!4d98.9355737!16s%2Fg%2F11kpg7fk6z?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>เขาช้างเผือก</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี4.1.jpg" />
+            <div class="content">
+            <p>ขั้นตอนการจองขึ้นเขาช้างเผือก <br> สำหรับการขึ้นไปพิชิตเขาช้างเผือกนั้น ทางอุทยานฯ ได้จำกัดจำนวนนักท่องเที่ยววันละไม่เกิน 60 คนต่อวัน เท่านั้น <br><br> เปิดรับจองทางโทรศัพท์ 0-3451-0979 และหมายเลข 09-8252-0359 ตั้งแต่ 08.30-16.30 น. ไม่เว้นวันหยุดราชการ และจองได้ครั้งละไม่เกิน 6 คน <br><br> ต้องทำการจองล่วงหน้าไม่เกิน 7 วัน (ตัวอย่างเช่น ต้องการเข้าพื้นที่วันที่ 29 พฤศจิกายน 2565 ต้องเริ่มทำการจองตั้งแต่วันอังคาร 22 พฤศจิกายน 2565 เป็นต้นไป) <br><br> นักท่องเที่ยวที่จองวันขึ้นเขาช้างเผือกได้ ต้องแจ้ง ชื่อ-นามสกุล เบอร์โทรศัพท์ และเลขบัตรประชาชนของทุกคนโดยทันที และจัดส่งเอกสารสำเนาบัตรประชาชนของผู้เดินทางทุกคนภายใน 1 วัน ไปที่ Email : Thongphaphumoffice@gmail.com <br><br> ในวันกำหนดเดินขึ้นเขาช้างเผือก ต้องไปลงทะเบียนพร้อมแสดงบัตรประชาชนตัวจริง ที่ ศูนย์บริการนักท่องเที่ยว ตั้งแต่เวลา 06.00-08.00 น. <br><br> นักท่องเที่ยวทุกคนต้องพร้อมกันที่ บ้านอีต่อง (ป้ายเขาช้างเผือก) ไม่เกินเวลา 09.00 น. เพื่อความเตรียมพร้อมในการเดินป่าต่อไป <br><br> เจ้าหน้าที่อุทยานแห่งชาติทองผาภูมิ ดูแลความปลอดภัยนักท่องเที่ยว อัตราส่วน 1/12 <br><br> นักท่องเที่ยวต้องมีอายุตั้งแต่ 13 ปีขึ้นไป และไม่เกิน 70 ปี
+
+              <a href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%82%E0%B8%B2%E0%B8%8A%E0%B9%89%E0%B8%B2%E0%B8%87%E0%B9%80%E0%B8%9C%E0%B8%B7%E0%B8%AD%E0%B8%81/@14.7269441,98.3886111,15z/data=!3m1!4b1!4m6!3m5!1s0x30e5d18f74828995:0xa7d443330bcdf49f!8m2!3d14.7269444!4d98.3886111!16s%2Fg%2F11c5rmdqnz?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>บ้านอีต่อง ปิล็อก</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวกาญจนบุรี5.1.webp" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ban I Tong, ปิล๊อก ban I Tong, กาญจนบุรี 71180 เปิด24 ชม. ของทุกวัน <br> บ้านอีต่อง เป็นที่ตั้งของเหมืองปิล็อก ที่เคยรุ่งเรืองในอดีต เมื่อราวปี พ.ศ. 2483 เหมืองขุดแร่ดีบุกที่มีคนงานร่วม 600 คน จนราคาแร่ทั่วโลกตกต่ำ ผลจากการตัดราคาของแร่จากจีน  ประมาณปี พ.ศ. 2527-2528 ความรุ่งโรจน์ของการขุดแร่ได้จบลง  ปิล๊อกที่เคยรุ่งเรือง มีตลาดที่เฟื่องฟู เคยมีโรงภาพยนตร์ถึง 2 โรงก็เงียบเหงา เหมืองแร่ต่างๆ ที่นี่ทยอยปิดตัวลง คนงานเริ่มทยอยกลับบ้านแยกย้ายกันไป ปัจจุบันนี้รายได้หลักของหมู่บ้านอีต่องคือ การท่องเที่ยว ที่พักโฮมสเตย์ เหมาะสำหรับผู้ที่ชอบธรรมชาติ อากาศดี อยู่สูงจากระดับน้ำทะเลกว่า 1,000 เมตร เมืองที่ร่ำรวยด้วยหมอก ปัจจุบันเป็นจุดหมายปลายทางที่นักท่องเที่ยวหลายคนต้องการมาสัมผัส ต้องเดินทางผ่าน 399 โค้ง และยังมีแหล่งท่องเที่ยวใกล้ๆ คือ น้ำตกจ๊อกกระดิ่น เนินช้างศึก อุทยานแห่งชาติทองผาภูมิ
+              <a href="https://www.google.com/maps/place/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AD%E0%B8%B5%E0%B8%95%E0%B9%88%E0%B8%AD%E0%B8%87/@14.6785626,98.369572,17z/data=!3m1!4b1!4m6!3m5!1s0x30e5d02b2568c003:0x61cd27b65077c634!8m2!3d14.6785626!4d98.369572!16s%2Fg%2F1hm5tkjpm?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+          <div class="indicators"></div></center><br>
+        <nav class="menu-bar1">
+          <h1>ที่พัก</h1>
+         </nav>
+         <center><div class="container">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี1.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี2.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี3.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี4.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี5.jpg" class="img">
+        </div>
+        <div class="text-box"><h1>The Float House River Kwai</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี1.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 55 ตำบล วังกระแจะ อำเภอไทรโยค กาญจนบุรี 71150 โทร:0847258686 <br> ดื่มด่ำไปกับความงามของธรรมชาติอันน่าทึ่งของไทรโยค กาญจนบุรี ที่เดอะ โฟลทเฮาส์ ริเวอร์แคว รีสอร์ท รีสอร์ทหรูแห่งนี้มีสิ่งอำนวยความสะดวกสุดพิเศษ เช่น ฟิตเนส สระว่ายน้ำบนดาดฟ้า บริการสปา และห้องอาหารชั้นเลิศ สัมผัสความสะดวกสบายใน ห้องพักพร้อมอุปกรณ์ครบครัน เครื่องปรับอากาศ Wi-Fi ฟรี และห้องอาบน้ำฝักบัวสดชื่น เลือกห้องลอยน้ำพร้อมระเบียงส่วนตัวเพื่อชมวิวแม่น้ำอันตระการตา อิ่มอร่อยกับอาหารเลิศรสและร่วมกิจกรรมและทัวร์มากมายท่ามกลางป่าอันเงียบสงบ สมบูรณ์แบบ สำหรับนักเดินทางสองคนที่แสวงหาความสงบและการผจญภัย
+            <a href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0+%E0%B9%82%E0%B8%9F%E0%B8%A5%E0%B8%97%E0%B9%80%E0%B8%AE%E0%B8%B2%E0%B8%AA%E0%B9%8C/@14.3033237,98.9808883,17z/data=!4m10!3m9!1s0x30e46f861e7bb4ed:0xd286a2329cff92d3!5m3!1s2025-05-15!4m1!1i2!8m2!3d14.3033237!4d98.9808883!16s%2Fg%2F1hf38_c4z?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี1.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี1.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>Mida Resort Kanchanaburi - SHA PLUS</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี2.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 199 หมู่ที่ 2 ถนน ลาดหญ้า-ศรีสวัสดิ์ ตำบล วังด้ง อำเภอเมืองกาญจนบุรี กาญจนบุรี 71190 โทร:034919606 <br> พักที่ไมด้ารีสอร์ท กาญจนบุรี เพื่อเข้าถึงแม่น้ำแควใหญ่ที่สวยงามเป็นพิเศษ เพลิดเพลินกับเต็นท์ริมแม่น้ำ อาหารอร่อยที่ร้านอาหาร และสถานที่ท่องเที่ยวในบริเวณใกล้เคียง สถานที่พักผ่อนที่เป็นมิตรต่อสิ่งแวดล้อมที่น่าทึ่งในกาญจนบุรี ค้นพบวังด้ง กาญจนบุรี พื้นที่อันเงียบสงบที่ขึ้นชื่อในด้านบรรยากาศอันเงียบสงบและความงามของธรรมชาติอันน่าทึ่ง สัมผัสประสบการณ์หรูหราพร้อมวิวสระว่ายน้ำที่สวยงาม ผ่อนคลายที่บาร์ ปล่อยตัวในห้องซาวน่า ผ่อนคลายที่เลานจ์ส่วนกลาง และสำรวจทัวร์ที่น่าตื่นเต้น โอเอซิสของคุณรออยู่ด้วยเครื่องปรับอากาศ ระเบียง/ชานเรือนที่ผ่อนคลาย Wi-Fi ฟรี ฝักบัวที่เติมพลัง และอุปกรณ์อาบน้ำที่หรูหรา ดื่มด่ำไปกับวิวสวน สระว่ายน้ำ หรือแม่น้ำที่สวยงาม เพื่อการเข้าพักอันน่าจดจำ
+            <a href="https://www.google.com/maps/place/Mida+Resort+Kanchanaburi/@14.1792426,99.2715611,17z/data=!4m10!3m9!1s0x30e662310195a5e5:0x8d33a7cfb2459c6d!5m3!1s2025-05-15!4m1!1i2!8m2!3d14.1792426!4d99.2715611!16s%2Fg%2F1th5fxlc?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี2.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี2.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>Hintok River Camp</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี3.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ 109, Ban Had Ngew, ตำบล ท่าเสา อำเภอไทรโยค กาญจนบุรี 71150 โทร:026425497 <br> หลีกหนีสู่ความงามอันเงียบสงบของโรงแรมหินตกริเวอร์แคมป์ @ โรงแรมช่องเขาขาด เต็นท์แสนสบาย วิวภูเขาอันตระการตา และสภาพแวดล้อมอันเงียบสงบสร้างสถานที่พักผ่อนที่ไม่เหมือนใครสำหรับนักเดินทางสองคน เพลิดเพลินกับสิ่งอำนวยความสะดวกสุดหรู เช่น สระว่ายน้ำเพื่อความสดชื่น สปาเพื่อการฟื้นฟู และบาร์มีสไตล์ สำรวจ สถานที่ท่องเที่ยวในท้องถิ่นพร้อมโต๊ะบริการทัวร์และจักรยานฟรี ผ่อนคลายในห้องปรับอากาศพร้อมระเบียง / ชานเรือนและ Wi-Fi ฟรี ดื่มด่ำกับอาหารมื้ออร่อยและสระน้ำธรรมชาติเพื่อประสบการณ์แคมป์ปิ้งที่ดีที่สุด ค้นพบน้ำตกในบริเวณใกล้เคียงและแหล่งท่องเที่ยวทางวัฒนธรรมเช่นช่องเขาขาด . การผจญภัยที่น่าจดจำรอคุณอยู่ที่หินตกริเวอร์แคมป์ @ โรงแรมช่องเขาขาด
+            <a href="https://www.google.com/maps/place/Hintok+River+Camp+@+Hellfire+Pass+%E0%B8%AB%E0%B8%B4%E0%B8%99%E0%B8%95%E0%B8%81%E0%B8%A3%E0%B8%B4%E0%B9%80%E0%B8%A7%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B9%80%E0%B9%80%E0%B8%84%E0%B8%A1%E0%B8%9B%E0%B9%8C+%E0%B8%81%E0%B8%B2%E0%B8%8D%E0%B8%88%E0%B8%99%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5/@14.3535663,98.9286109,17z/data=!4m10!3m9!1s0x30e46ed432ec633b:0x22806e70b6ec7f21!5m3!1s2025-05-15!4m1!1i2!8m2!3d14.3535663!4d98.9286109!16s%2Fg%2F1hm3sdkz_?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี3.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี3.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>แควน้อยริเวอร์พาร์ค</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี4.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ 46 1 ตำบล ลุ่มสุ่ม อำเภอไทรโยค กาญจนบุรี 71150 โทร:0813144542 <br> หลีกหนีความวุ่นวายมาที่แควน้อย ริเวอร์ พาร์ค รีสอร์ท ไทรโยค กาญจนบุรี ที่ซึ่งคุณสามารถดื่มด่ำไปกับความงามของป่าไม้เขียวชอุ่ม น้ำตกที่สวยงาม และมรดกทางวัฒนธรรมอันยาวนาน รีสอร์ทหรูแห่งนี้ตอบสนองความต้องการของนักเดินทางสองคนพร้อมบริการที่ดี - ห้องพักพร้อมเครื่องปรับอากาศ Wi-Fi ฟรี และฝักบัวเพิ่มความสดชื่น เพลิดเพลินกับบริการส่งอาหารและแช่ตัวในสระว่ายน้ำในร่ม เพลิดเพลินกับทิวทัศน์อันงดงามของภูเขาและแม่น้ำอันงดงามจากบางห้อง ผ่อนคลายในอากาศร้อน อ่างอาบน้ำหรือพักผ่อนในเลานจ์ส่วนกลาง สัมผัสความสะดวกสบาย ความเงียบสงบ และความงามของธรรมชาติที่แควน้อย ริเวอร์ ปาร์ค รีสอร์ท เพื่อการพักผ่อนอันน่าจดจำ
+            <a href="https://www.google.com/maps/place/Kwainoyriverpark+Resort+%E0%B9%81%E0%B8%84%E0%B8%A7%E0%B8%99%E0%B9%89%E0%B8%AD%E0%B8%A2%E0%B8%A3%E0%B8%B4%E0%B9%80%E0%B8%A7%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%9E%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%84/@14.0877473,99.1833635,17z/data=!4m10!3m9!1s0x30e4814433ea9dc9:0x18bc9c8a876d4e71!5m3!1s2025-05-15!4m1!1i2!8m2!3d14.0877473!4d99.1833635!16s%2Fg%2F1tg5x266?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี4.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี4.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>BaanRai KhunYa บ้านไร่คุณย่า</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี5.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ ตำบล ท่าเสา อำเภอไทรโยค กาญจนบุรี 71150 โทร:0615192896 <br> บ้านไร่คุณย่า (BaanRai KhunYa) เป็นที่พักสไตล์รีสอร์ทที่ตั้งอยู่ในอำเภอไทรโยค จังหวัดกาญจนบุรี โดยมีบ้านพักไม้จำนวน 5 หลังที่ออกแบบให้เป็นอิสระจากกัน เพื่อให้ผู้เข้าพักได้สัมผัสกับบรรยากาศที่เป็นส่วนตัวและใกล้ชิดธรรมชาติ ที่พักตั้งอยู่ริมแม่น้ำแควน้อย โดยแต่ละหลังมีระเบียงที่สามารถชมวิวแม่น้ำและภูเขาได้อย่างชัดเจน ภายในห้องพักมีสิ่งอำนวยความสะดวกครบครัน เช่น เครื่องปรับอากาศ โทรทัศน์จอแบน ตู้เย็น กาต้มน้ำ ไดร์เป่าผม และห้องน้ำส่วนตัวพร้อมฝักบัวและเครื่องใช้ในห้องน้ำฟรี
+            <a href="https://www.google.com/maps/place/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B9%84%E0%B8%A3%E0%B9%88%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%A2%E0%B9%88%E0%B8%B2/@14.343551,98.9333586,17z/data=!4m10!3m9!1s0x30e46f2f32878b65:0x346981d84d04e971!5m3!1s2025-05-15!4m1!1i2!8m2!3d14.343551!4d98.9333586!16s%2Fg%2F11g9m5fzj_?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี5.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักกาญจนบุรี5.3.jpg">
+        </div>
+      </div>
+        <div class="indicators"></div></center>
+      </div>
+      
+      <div id="info-ตาก" class="info-box">
+        <nav class="menu-bar1">
+          <h1>ที่เที่ยว</h1>
+         </nav>
+          <center><div class="container">
+            <img src="imgตะวันตก/bgที่เที่ยวตาก1.jpeg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวตาก2.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวตาก3.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวตาก4.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวตาก5.jpg" class="img" />
+          </div>
+        <div class="text-box"><h1>นํ้าตกทีลอเล</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวตาก1.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบลแม่จัน อำเภออุ้มผาง ตาก 63170 <br> น้ำตกทีลอเล น้ำตกที่ซ่อนตัวอยู่ในป่าใหญ่ ล่องแพยาง 6 ชั่วโมง ผ่านแก่งน้อยใหญ่ต่างๆ เช่น แก่งเลาะถ้ำ แก่งเจ็ดหมื่น แก่งบันได น้ำตก แก่งหินหยด แก่งหักศอก ล่องแพยางจากน้ำตกทีลอเลมาเล็กน้อยจะพบกับ “น้ำตกขั้นบันได” ที่ต้องถึงกับตะลึงในความงดงามของธรรมชาติ น้ำตกที่ไหลจากภูเขาสูง ลดหลั่นลงมาตามชะง่อนหิน ความสูงประมาณ 20 เมตร เทียบตึก 4 ชั้น เป็นน้ำตกแบบละอองน้ำผ่านชะง่อนหินของมอสและเฟิร์นแบบขั้นสลับต่างๆ เหมือนขั้นบันได และขากลับ เราต้องเดินเท้าผ่านเขาช้างร้อง สู่หมู่บ้านเซปะหละ ระยะทาง 18 กิโลเมตร รวมระยะเวลากว่า 8 ชั่วโมง
+              <a href="https://www.google.com/maps/place/%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%95%E0%B8%81%E0%B8%97%E0%B8%B5%E0%B8%A5%E0%B8%AD%E0%B9%80%E0%B8%A5+%E0%B8%95%E0%B8%B2%E0%B8%81/@15.6862027,98.8209117,17z/data=!3m1!4b1!4m6!3m5!1s0x30e71f4f5e8c3347:0x4af600ef0190cff3!8m2!3d15.6862027!4d98.8209117!16s%2Fg%2F11g9m9_ddb?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ม่อนหมอกตะวัน</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวตาก2.1.webp" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ Unnamed Road ตำบล คีรีราษฎร์ อำเภอ พบพระ ตาก 63160 <br>มีที่ท่องเที่ยวน่าสนใจสำหรับคนที่อยากเที่ยวช่วงปลายฝนต้นหนาว ชมทะเลหมอก ดูพระอาทิตย์ขึ้นและตกแบบ 360 องศาฯ ได้ที่ม่อนหมอกตะวัน ดอยป่าหวาย ที่นักท่องเที่ยวสามารถจองทั้งที่พักและลานกางเต็นท์ได้ <br> นักท่องเที่ยวแห่เดินทาง ชมทะเลหมอกที่ "ม่อนหมอกตะวัน" ดอยป่าหวาย โดยจองทั้งที่พักและลานกางเต็นท์ เพื่อมาชมพระอาทิตย์ขึ้นยามเช้าชมทะเลหมอก สัมผัสอากาศเย็นสบายยามเช้า ทำให้นักท่องเที่ยวต่างไปเที่ยวชมทะเลหมอก และสัมผัสอากาศหนาว
+              <a href="https://www.google.com/maps/place/%E0%B8%A1%E0%B9%88%E0%B8%AD%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%AD%E0%B8%81%E0%B8%95%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%99/@16.5754257,98.8204987,17z/data=!4m14!1m2!2m1!1z4Lih4LmI4Lit4LiZ4Lir4Lih4Lit4LiB4LiV4Liw4Lin4Lix4LiZ!3m10!1s0x30dd93ef27158881:0x8d35dd14345963fd!5m3!1s2025-05-15!4m1!1i2!8m2!3d16.5754257!4d98.8252623!15sCifguKHguYjguK3guJnguKvguKHguK3guIHguJXguLDguKfguLHguJmSARJ0b3VyaXN0X2F0dHJhY3Rpb26qAVEQATIeEAEiGigXEt7exm9hluU5ZwH0oQNGKmSlimuqwR9tMi0QAiIp4Lih4LmI4Lit4LiZIOC4q-C4oeC4reC4gSDguJXguLDguKfguLHguJngAQA!16s%2Fg%2F11jtdkprcp?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ตรอกบ้านจีน</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวตาก3.1.jpeg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 1043 ถนน ตากสิน ตำบลระแหง อำเภอเมืองตาก ตาก 63000 เปิดและปิดเวลา 08.00 - 17.00 น.ของทุกวัน <br> ขอเริ่มต้นเล่าเรื่องราวประวัติความเป็นมาของเมืองระแหงสักเล็กน้อยครับ ย้อนหลังกลับไปเมื่อครั้งต้นกรุงรัตนโกสินทร์มีชาวจีนอพยพมาจากจีนแผ่นดินใหญ่แล้วตั้งบ้านเรือนเป็นแนวทางตรงมีตรอกเล็ก ๆ เป็นทางเดินแล้วประกอบกิจการด้านการค้าส่งสินค้าทางเรือขึ้นทางเหนือเรียกว่าเคยเป็นย่านการค้าที่สำคัญของเมืองระแหงหรือในเวลาต่อมาก็คือ "เมืองตาก" นั้นเองครับ พอความเจริญเข้ามามีถนนหนทางตัดผ่านตัวเมืองตากหรือจังหวัดตากย่านการค้าชาวจีนก็ซบเซาลงเหลือไว้แค่ความทรงจำเมื่อครั้งอดีตกาล <br> อย่างไรก็ตาม "ตรอกบ้านจีนโบราณ" ที่ชาวบ้านชาวเมืองตากเรียกขานว่าตรอกบ้านจีนก็เปิดให้ผู้สนใจเข้าชมได้ทุกวัน เริ่มตั้งแต่ทางเข้าตรงป้ายชื่อไปจนกระทั่งสุดตรอกบ้านจีน โดยมีกิจกรรมที่น่าสนใจหลากหลายอย่างที่หนุ่ม-สุทนได้เข้าร่วมมาแล้วขอนำข้อมูลเรื่องราวมาเล่าให้ท่านผู้อ่านได้รับทราบ โดยเริ่มต้นที่ กิจกรรมที่ 1 "ถ่ายภาพบ้านจีนโบราณ" คล้าย ๆ บ้านเรือนชาวสยามต้นกรุงรัตนโกสินทร์เป็นบ้าน 2 ชั้นหลังคามุงกระเบื้องมีจั่วสูงดูสวยงามแปลกตาเพราะส่วนใหญ่ชาวจีนจะสร้างเป็นห้องแถวไม้ 2 ชั้น ชั้นบนเรียกเหลาเต็ง แต่ที่เมืองระแหงหรือเมืองตากแบบบ้านคล้ายบ้านชาวสยามจริง ๆ เป็นศิลปะยุคสมัยโบราณหาชมได้ยากมากครับ ต้องไม่พลาดถ่ายภาพตัวเองคู่กับบ้านโบราณสวยงามมาก
+              <a href="https://www.google.com/maps/place/%E0%B8%95%E0%B8%A3%E0%B8%AD%E0%B8%81%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%88%E0%B8%B5%E0%B8%99+(%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B9%82%E0%B8%AA%E0%B8%A0%E0%B9%82%E0%B8%93%E0%B8%94%E0%B8%A3)/@16.8676438,99.1253187,17z/data=!3m1!4b1!4m6!3m5!1s0x30ddd9bde5f3ef5b:0xe9b60a9abb92842a!8m2!3d16.8676438!4d99.1253187!16s%2Fg%2F1hm6kj3n9?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ถํ้าสีฟ้า</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวตาก4.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบล มหาวัน อำเภอแม่สอด ตาก 63110 เปิดและปิดเวลา 08.00 - 17.00 น.ของทุกวัน <br> ถ้ำสีฟ้า ตั้งอยู่ภายใน สำนักสงฆ์พุทธคยาถ้ำสีฟ้า ตำบลแม่กุ อำเภอแม่สอด จังหวัดตาก มีลักษณะเป็นถ้ำหินขนาดกว้างใหญ่ แต่ความไม่ธรรมดาคือ เป็น ถ้ำที่มีหินสีฟ้า และเนื้อหินยังมีลวดลายสวยงามมากๆ อีกด้วยค่ะ ภายในถ้ำก็จะเต็มไปด้วยหินงอกหินย้อยอลังการงานสร้าง <br> บริเวณโถงถ้ำด้านหน้า จะมีพระพุทธรูปนอนในศิลปะแบบเมียนม่า ให้เราได้กราบสักการะกันก่อนเข้าถ้ำอีกด้วย ส่วนหินบริเวณปากถ้ำก็สวยไม่แพ้ในถ้ำเลย เพียงแค่หน้าปากถ้ำจะไม่ได้เป็นสีฟ้าทั้งหมดเท่านั้นค่ะ มีแทรกสีฟ้าบ้างนิดหน่อย พอให้เป็นน้ำจิ้มก่อนจะเข้าไปชมผนังถ้ำกันที่ด้านใน <br> ภายใน ถ้ำสีฟ้า ก็จะมีพระพุทธรูปและสิ่งศักดิ์สิทธิ์ต่างๆ ให้ได้เข้าไปสักการะกราบไหว้กัน และจะมีในส่วนของซอกหิน ช่องเล็กช่องน้อยต่างๆ สลับซับซ้อนกันไปมา โดยเราจะสามารถเดินเที่ยวชมรอบๆ ถ้ำได้เลย เพราะจะมีทางเดินยาวไปตามทางอย่างดีเลย ที่เราเห็นผนังเป็นสีฟ้านั้น ก็เพราะเกิดจากการเปลี่ยนแปลงของสสารในพื้นผนัง ทำให้กลายเป็นผนังสีสวยแบบนี้
+              <a href="https://www.google.com/maps/place/%E0%B8%96%E0%B9%89%E0%B8%B3%E0%B8%AA%E0%B8%B5%E0%B8%9F%E0%B9%89%E0%B8%B2/@16.6024354,98.7125052,17z/data=!3m1!4b1!4m6!3m5!1s0x30dd910d53d948f3:0xe5fd908344354ce3!8m2!3d16.6024354!4d98.7125052!16s%2Fg%2F11h22j967s?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ดอยมะม่วงสามหมื่น</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวตาก5.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบลแม่จัน อำเภออุ้มผาง จังหวัดตาก <br> ดอยมะม่วงสามหมื่น ตั้งอยู่ใน ตำบลแม่จัน อำเภออุ้มผาง จังหวัดตาก เป็นสถานที่ท่องเที่ยวที่อยู่ใกล้ๆ กับ น้ำตกรูปหัวใจ หรือ น้ำตกเปรโต๊ะลอซู นั่นเองค่ะ อยู่ในความรับผิดชอบของ หมู่บ้านกุยเลอตอ และต้องใช้วิถีเดินเท้าเข้าไปในป่าเท่านั้นค่ะ ใช้เวลากว่า 4-5 ชั่วโมง เต็มๆ นักท่องเที่ยวส่วนใหญ่ที่มาที่นี่เลย นิยมมากางเต็นท์นอนชมธรรมชาติกลางป่ากันเลย <br>  ต้องบอกก่อนว่า การจะไปถึงยอด ดอยมะม่วงสามหมื่น นั้น ไม่ใช่เรื่องง่ายๆ อย่างแน่นอน เพราะทางค่อนข้างทรหดพอตัว นอกจากร่างกายและใจต้องพร้อมแล้ว ก็ต้องอาศัยความพร้อมของสภาพอากาศกันอีกด้วย ถ้าอากาศไม่เปิดหมอกหนา ปิดทางเราก็จะไม่ได้เห็นวิวทิวทัศน์สวยๆ กันอย่างแน่นอน
+              <a href="https://www.google.com/maps/place/%E0%B8%88%E0%B8%B8%E0%B8%94%E0%B8%8A%E0%B8%A1%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%AB%E0%B8%B4%E0%B8%99%E0%B8%AA%E0%B8%B2%E0%B8%A1%E0%B8%81%E0%B8%AD%E0%B8%87+%E0%B8%94%E0%B8%AD%E0%B8%A2%E0%B8%A1%E0%B8%B0%E0%B8%A1%E0%B9%88%E0%B8%A7%E0%B8%87%E0%B8%AA%E0%B8%B2%E0%B8%A1%E0%B8%AB%E0%B8%A1%E0%B8%B7%E0%B9%88%E0%B8%99/@15.8963724,98.5712328,14z/data=!4m10!1m2!2m1!1z4LiU4Lit4Lii4Lih4Liw4Lih4LmI4Lin4LiH4Liq4Liy4Lih4Lir4Lih4Li34LmI4LiZ!3m6!1s0x30e70f4bc767965b:0x596a5e52dc9acb2e!8m2!3d15.8767384!4d98.6107834!15sCjPguJTguK3guKLguKHguLDguKHguYjguKfguIfguKrguLLguKHguKvguKHguLfguYjguJmSAQtoaWtpbmdfYXJlYaoBmwEQASo6IjbguJTguK3guKIg4Lih4Liw4Lih4LmI4Lin4LiHIOC4quC4suC4oSDguKvguKHguLfguYjguJkoNTIfEAEiG9GIFZyFrta7MizhcyYe5AuxKCuswHILr1ag7jI6EAIiNuC4lOC4reC4oiDguKHguLDguKHguYjguKfguIcg4Liq4Liy4LihIOC4q-C4oeC4t-C5iOC4meABAA!16s%2Fg%2F11l4qkr2pt?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+          <div class="indicators"></div></center><br>
+        <nav class="menu-bar1">
+          <h1>ที่พัก</h1>
+         </nav>
+         <center><div class="container">
+          <img src="imgตะวันตก/bgที่พักตาก1.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักตาก2.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักตาก3.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักตาก4.webp" class="img">
+          <img src="imgตะวันตก/bgที่พักตาก5.jpg" class="img">
+        </div>
+        <div class="text-box"><h1>White House</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักตาก1.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ 333 3 ตำบล ไม้งาม อำเภอเมืองตาก ตาก 63000 โทร:055514444 <br> White House Hotel ตั้งอยู่ในเมืองตาก ให้ทัศนียภาพริมน้ำที่เงียบสงบและเป็นฐานที่เงียบสงบในการสำรวจวัฒนธรรมไทยแท้ ๆ เหมาะสำหรับนักเดินทางสองคน โรงแรมมีสระว่ายน้ำที่ดูแลอย่างดี บริการให้เช่าจักรยานฟรีสำหรับการสำรวจท้องถิ่น และบริการรูมเซอร์วิสที่สะดวกสบาย ห้องพักบางห้องมีระเบียงหรือเฉลียงส่วนตัวที่มองเห็นสระว่ายน้ำที่เงียบสงบ ในขณะที่ทุกห้องมี WiFi ฟรีและเครื่องปรับอากาศเพื่อเพิ่มความสะดวกสบาย ด้วยที่ตั้งที่อยู่ใจกลางเมืองและสิ่งอำนวยความสะดวกที่ผ่อนคลาย โรงแรมนี้จึงเหมาะสำหรับการเข้าพักระยะสั้นและการผจญภัยทางวัฒนธรรม
+            <a href="https://www.google.com/maps/place/White+House+Hotel/@16.9055672,99.1248638,17z/data=!3m1!4b1!4m10!3m9!1s0x30ddd7670b5bff97:0x340046f8deeb28ba!5m3!1s2025-05-15!4m1!1i2!8m2!3d16.9055672!4d99.1248638!16s%2Fg%2F11g7nvnk4n?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักตาก1.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักตาก1.3.jpg">
+        </div>
+      </div>
+        <div class="text-box"><h1>The Picturebook Guesthouse</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักตาก2.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ Unnamed Road ตำบล แม่สอด อำเภอแม่สอด ตาก 63110 โทร:0904596990 <br> ที่พักตั้งอยู่ในย่านแม่สอด จึงอยู่ใกล้กับที่เที่ยวมากมาย และสะดวกต่อการเดินทางไปสถานที่ต่างๆ ที่พักมีบริการนวด และ ฟิตเนสเซ็นเตอร์ ช่วยให้วันพักผ่อนสะดวกสบายผ่อนคลายขึ้นไปอีกขั้น
+            <a href="https://www.google.com/maps/place/The+Picturebook+Guesthouse/@16.7171024,98.5812018,17z/data=!4m10!3m9!1s0x30dd98b0c47a2711:0xa68c6f3a299043cb!5m3!1s2025-05-15!4m1!1i2!8m2!3d16.7171024!4d98.5812018!16s%2Fg%2F11b7c32vdq?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักตาก2.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักตาก2.3.jpg">
+        </div>
+      </div>
+        <div class="text-box"><h1>โรงแรมบีริช (Berich Hotel)</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักตาก3.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 2/4 Mahathai ถนนมหาดไทยบำรุง Tambol Nongluak Ampur Mueang ตาก 63000 โทร:0824446242 <br> หลีกหนีจากภูมิทัศน์อันเงียบสงบและเขียวชอุ่มของเมืองตากที่โรงแรมบีริช เหมาะสำหรับนักเดินทางสองคนที่แสวงหาความผ่อนคลายและความงามตามธรรมชาติ โรงแรมแห่งนี้มอบความหรูหราขั้นสุดยอดด้วยรูมเซอร์วิสตลอด 24 ชั่วโมง เช็คอิน/เช็คเอาท์ส่วนตัว และอินเทอร์เน็ตไร้สายฟรี . เพลิดเพลินกับความสะดวกสบายของการรับประทานอาหารในห้องพักหรือปรนเปรอต่อมรับรสที่ร้านอาหารภายในโรงแรม ตื่นขึ้นมาพร้อมวิวเมืองหรือภูเขาที่สวยงามจากห้องพักบางห้องและเริ่มต้นวันใหม่ด้วยอาหารเช้าแสนอร่อย สำรวจสถานที่ท่องเที่ยวในบริเวณใกล้เคียง เช่น ริมแม่น้ำและบุฟเฟ่ต์ร้อน ๆ ร้านอาหารหม้อเพื่อการเข้าพักอันน่าจดจำ จองวันหยุดพักผ่อนที่ดีที่สุดของคุณที่ Berich Hotel วันนี้และสัมผัสกับความสะดวกสบาย และความงามของธรรมชาติที่ดีที่สุด!
+            <a href="https://www.google.com/maps/place/Berich+Hotel/@16.883534,99.1225454,17z/data=!3m1!4b1!4m10!3m9!1s0x30ddd9e80cc7ea51:0x3b0a358403f695ad!5m3!1s2025-05-15!4m1!1i2!8m2!3d16.883534!4d99.1225454!16s%2Fg%2F11cn94zj6x?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักตาก3.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักตาก3.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>ปิงวิว วิลลา รีสอร์ท</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักตาก4.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 102 แม่ท้อ เมือง ตาก 63000 โทร:0800441133 <br> ค้นพบเสน่ห์ของปิงวิว วิลลา รีสอร์ท ในเมืองตาก ที่ซึ่งนักเดินทางสองคนสามารถดื่มด่ำกับวิวริมแม่น้ำที่เงียบสงบและสำรวจมรดกทางวัฒนธรรมที่หลากหลายในบริเวณใกล้เคียง สถานที่ตั้งที่ยอดเยี่ยมนี้ให้การเข้าถึงอุทยานแห่งชาติที่งดงามเช่น ดอยภูคา ได้อย่างง่ายดาย เพลิดเพลินกับอาหารรสเลิศที่ห้องอาหารในสถานที่หรือเพลิดเพลินกับบริการรูมเซอร์วิสที่ยอดเยี่ยม พักผ่อนในห้องพักที่โปร่งสบายพร้อม WiFi ฟรี ระเบียงหรือเฉลียง และวิวที่น่าหลงใหลของสวนหรือแม่น้ำ เหมาะสำหรับนักเดินทางที่แสวงหาการหลบหนีที่กลมกลืนและผ่อนคลาย พร้อมตัวเลือกการรับประทานอาหารในห้องที่หลากหลายเพื่อความสะดวกสบายที่เพิ่มขึ้น
+            <a href="https://www.google.com/maps/place/%E0%B8%9B%E0%B8%B4%E0%B8%87%E0%B8%A7%E0%B8%B4%E0%B8%A7%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%97/@16.8615092,99.1217148,17z/data=!4m10!3m9!1s0x30ddd9983f1dd525:0x7ec23d7b72874428!5m3!1s2025-05-15!4m1!1i2!8m2!3d16.8615092!4d99.1217148!16s%2Fg%2F11g9vxvkzh?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักตาก4.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักตาก4.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>Alto Hotel M</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักตาก5.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ 54 9 ถนนสายเอเชีย ตำบล แม่สอด อำเภอแม่สอด ตาก 63110 โทร:055030563 <br> ที่พักตั้งอยู่ในย่านแม่สอดของตาก ผู้เข้าพักจึงได้อยู่ใกล้สถานที่ท่องเที่ยวน่าสนใจและร้านอาหารอร่อยๆ ที่พัก 3 ดาวนี้มีสิ่งอำนวยความสะดวกที่จะช่วยเพิ่มความผ่อนคลายสูงสุดให้แก่ผู้เข้าพัก
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1+%E0%B9%81%E0%B8%AD%E0%B8%A5%E0%B9%82%E0%B8%98+%E0%B9%82%E0%B8%AE%E0%B9%80%E0%B8%97%E0%B9%87%E0%B8%A5+%E0%B9%80%E0%B8%AD%E0%B9%87%E0%B8%A1+%E0%B9%81%E0%B8%A1%E0%B9%88%E0%B8%AA%E0%B8%AD%E0%B8%94/@16.7227046,98.5744975,17z/data=!4m10!3m9!1s0x30dd993a77d2941f:0xabe45f45ce7eaa07!5m3!1s2025-05-15!4m1!1i2!8m2!3d16.7227046!4d98.5744975!16s%2Fg%2F11stlkfjw3?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักตาก5.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักตาก5.3.jpg">
+        </div>
+      </div>
+        <div class="indicators"></div></center>
+      </div>
+
+      <div id="info-ประจวบคีรีขันธ์" class="info-box">
+        <nav class="menu-bar1">
+          <h1>ที่เที่ยว</h1>
+         </nav>
+          <center><div class="container">
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์1.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์2.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์3.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์4.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์5.jpg" class="img" />
+          </div>
+        <div class="text-box"><h1>หาดหัวหิน</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์1.1.webp" />
+            <div class="content">
+            <p> เป็นชายหาดตามธรรมชาติของอำเภอหัวหิน จังหวัดประจวบคีรีขันธ์มีความยาวราว 20 กิโลเมตร <br> ชายหาดอันเป็นแหล่งท่องเที่ยวพักตากอากาศที่มีชื่อเสียงแห่งแรกของเมืองไทย ด้วยน้ำทะเลใส ทรายสะอาด บรรยากาศดี จึงเป็นที่ใฝ่ฝันและได้รับความนิยมจากนักท่องเที่ยวมานาน ทุกยุคทุกสมัย โดยเป็นที่มาของ นวนิยายแและละครหลากเรือง เช่น ปริศนา รวมทั้งยังมีวังไกลกังวลสำหรับแปรพระราชฐานในฤดูร้อน โดยจุดสังเกตพิเศษ ชายหาดจะมีเขื่อนหินซีเมนต์ซึ่งถุกก่อสร้างตั้งแต่ปี พ.ศ. 2503 [1] ก่อนการเริ่มก่อสร้างพระราชวัง ในรัชกาลที่ 5 และไม่มีถนนเลียบหาดเนื่องจาก ชายหาดในสมัยโบราณจำเป็นจำต้องให้มีบ้านพักของขุนนางและพระญาติ เพื่อมิให้มีผู้บุกรุกทางชาดหาดและทะเล จึงทำให้ที่ดินในปัจจุบันสามารถมีหาดติดส่วนของที่ดินได้ แต่มิใช้ หาดจะเป็นสถานที่ส่วนตัวยังถูกดูแลโดยส่วนเทศบาลโดยยังมีโรงแรมซึ่งเดิมเป็นของเชื้อพระวงศ์คือวังจักรพงศ์ของสมเด็จพระเจ้าบรมวงศ์เธอ เจ้าฟ้าจักรพงศ์ภูวนาถ กรมหลวงพิษณุโลกประชานาถปัจจุบันเป็นโรงแรมฮิลตัน หัวหิน และโรงแรมรถไฟ ซึ่งเป็นโรงแรมดั้งเดิมของหัวหิน และยังมีบ้านพักตากอากาศส่วนตัว เช่น บ้านประเสริฐ บ้านสายนัดดา บ้านกิติก้อง บ้านรวมสุข บ้านกินนอน บ้านล่ำซำ บ้านสามสุข บ้านฮุนซุยโห อาคารบ้านพักเล่านี้ได้รับการดูแลและบูรณะขึ้นใหม่ จึงยังสวยงามน่าชม นักท่องเที่ยวยืนชมได้จากชายหาดเท่านั้น
+              <a href="https://www.google.com/maps/place/%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%B4%E0%B8%99/@12.5757858,99.9252712,13z/data=!3m1!4b1!4m6!3m5!1s0x30fdaa4a55b4e485:0x48245ba1ee643ec8!8m2!3d12.5696381!4d99.9626178!16s%2Fg%2F12dpwqjhh?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>อุทยานแห่งชาติกุยบุรี</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์2.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบลหาดขาม อำเภอกุยบุรี ประจวบคีรีขันธ์ 77150 เปิดและปิดเวลา 08.00 - 17.00 น.ของทุกวัน <br> อุทยานแห่งชาติกุยบุรี หรือ ผืนป่ากุยบุรี เป็นแหล่งต้นน้ำสำคัญของแม่น้ำกุยบุรีและแม่น้ำปราณบุรี หล่อเลี้ยงชีวิตของผู้คนในจังหวัดประจวบคีรีขันธ์ ได้รับการประกาศให้เป็นอุทยานแห่งชาติ มีวัตถุประสงค์หลักเพื่อคุ้มครองทรัพยากรธรรมชาติที่ปรากฏในพื้นที่ เพื่อเป็นแหล่งหาความรู้ศึกษาวิจัย และการประกอบกิจกรรมนันทนาการของประชาชน โดยได้รับประกาศให้เป็นอุทยานแห่งชาติในราชกิจจานุเบกษา เล่มที่ 116 ตอนที่ 20ก วันที่ 25 มีนาคม พ.ศ. 2542 นับเป็นอุทยานแห่งชาติลำดับที่ 90 ของประเทศ มีอาณาเขตครอบคลุม 4 อำเภอ คือ อำเภอปราณบุรี อำเภอสามร้อยยอด อำเภอกุยบุรี และอำเภอเมืองประจวบคีรีขันธ์ นอกจากนี้ อุทยานแห่งชาติกุยบุรียังเป็นส่วนหนึ่งของกลุ่มป่าแก่งกระจานซึ่งได้รับการขึ้นทะเบียนเป็นแหล่งมรดกโลกจากยูเนสโกเมื่อวันที่ 26 กรกฎาคม พ.ศ. 2564 อีกด้วย
+              <a href="https://www.google.com/maps/place/%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B9%81%E0%B8%AB%E0%B9%88%E0%B8%87%E0%B8%8A%E0%B8%B2%E0%B8%95%E0%B8%B4%E0%B8%81%E0%B8%B8%E0%B8%A2%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5/@12.0517132,99.6239151,17z/data=!3m1!4b1!4m6!3m5!1s0x30fc30c1a6ff0845:0x9897b60aa65a239f!8m2!3d12.0517132!4d99.6239151!16s%2Fm%2F03hnfqt?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>อุทยานราชภักดิ์</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์3.1.jpeg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 8 ถ.เพชรเกษม ตำบล หนองแก อำเภอหัวหิน ประจวบคีรีขันธ์ 77110 เปิดและปิดเวลา 08.00 - 17.00 น.ของทุกวัน <br> ทยานราชภักดิ์ เป็นอุทยานประวัติศาสตร์ ตั้งอยู่ที่ตำบลหนองแก อำเภอหัวหิน จังหวัดประจวบคีรีขันธ์ เป็นที่ตั้งของพระบรมราชานุสาวรีย์ของพระมหากษัตริย์ไทยในอดีต 7 พระองค์ โดยพระบาทสมเด็จพระบรมมชนกาธิเบศร มหาภูมิพลอดุลยเดชมหาราช บรมนาถบพิตร พระราชทานชื่อว่า “อุทยานราชภักดิ์" หมายถึง อุทยานที่สร้างขึ้นด้วยความจงรักภักดีและเพื่อเป็นการเทิดทูนและประกาศเกียรติคุณของพระมหากษัตริย์ไทย และทรงพระกรุณาโปรดเกล้าฯ ให้พระบาทสมเด็จพระวชิรเกล้าเจ้าอยู่หัว ขณะดำรงพระราชอิสริยยศสมเด็จพระบรมโอรสาธิราชฯ สยามมกุฎราชกุมาร เสด็จพระราชดำเนินแทนพระองค์พร้อมด้วยสมเด็จพระเจ้าลูกเธอ เจ้าฟ้าพัชรกิติยาภา นเรนทิราเทพยวดี กรมหลวงราชสาริณีสิริพัชร มหาวัชรราชธิดา มาทรงเปิดอุทยาน เมื่อวันที่ 26 กันยายน พ.ศ. 2558 ในปีถัดมาได้มีการจดทะเบียน "มูลนิธิอุทยานราชภักดิ์ ในพระราชูปถัมภ์ สมเด็จพระบรมโอรสาธิราชฯ สยามมกุฎราชกุมาร" ย่อว่า "ร.ภ." เพื่อดูแลอุทยานแห่งนี้โดยเฉพาะ โดยมีพลเอก อุดมเดช สีตบุตร เป็นประธานคณะกรรมการ
+              <a href="https://www.google.com/maps/search/%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%A0%E0%B8%B1%E0%B8%81%E0%B8%94%E0%B8%B4%E0%B9%8C/@12.5015054,99.9621534,16z?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>หาดปากนํ้าปราณบุรี</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์4.1.jpg" />
+            <div class="content">
+            <p>หาดปากน้ำปราณ ตั้งอยู่ที่ ตำบลปากน้ำปราณ อำเภอปราณบุรี จังหวัดประจวบคีรีขันธ์ <br> เป็นชายหาดที่ยาวต่อเนื่องมาจากชายหาดหัวหิน รวมไปถึง วนอุทยานปราณบุรี และเป็นชายหาดที่สวยงามทอดยาวจรดอุทยานแห่งชาติเขาสามร้อยยอดเลย ถึงแม้ว่าที่นี่จะอยู่ใกล้หัวหินแต่ก็ยังเป็นชายหาดที่เงียบสงบและร่มรื่นอยู่มาก และบริเวณรอบๆ ก็มีที่พักให้บริการหลายแห่งด้วยกัน ด้วยบริเวณของ ปากน้ำปราณ ที่หาดทรายขาว ทะเลสวย นักท่องเที่ยวที่มาที่นี่ก็จะนิยมมา ล่องเรือชมแม่น้ำปราณบุรี ชมวิถีชาวปากน้ำปราณ และพักผ่อนริมชายหาดปากน้ำปราณ เพราะบริเวณ ปากน้ำปราณ นั้นคือ บริเวณช่วงที่แม่น้ำปราณบุรีไหลลงสู่ทะเล ชาวบ้านส่วนใหญ่ในบริเวณนี้ก็จะประกอบอาชีพประมงกัน หมู่บ้านในบริเวณนี้ เลยเป็นเหมือนศูนย์รวมอาหารทะเลในราคาสบายๆ กระเป๋า ซึ่งอาหารทะเลที่ขึ้นชื่อของที่นี่ ก็คือ ปลาหมึกสด ปลาหมึกแดดเดียว ปลาหมึกแห้ง กะปิเคย กุ้งแห้ง และอีกมากมายเลย และอีกจุดเด่นของที่นี่ก็คือ ต้นตาลสามพี่น้อง ที่จะอยู่คู่ชายหาด คอยรอต้อนรับนักท่องเที่ยวอยู่
+              <a href="https://www.google.com/maps/place/%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%93%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5/@12.3915393,99.9759211,14z/data=!3m1!4b1!4m6!3m5!1s0x30fdb18a45d82269:0xe5c620f985198953!8m2!3d12.3968217!4d99.9954352!16s%2Fg%2F11bw2041ns?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ถํ้าพระยานคร</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวประจวบคีรีขันธ์5.1.jpeg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบล สามร้อยยอด อำเภอสามร้อยยอด ประจวบคีรีขันธ์ 77120 เปิดและปิดเวลา 08.30 - 15.30 น.ของทุกวัน <br> สำหรับถ้ำพระยานคร (Phraya Nakhon Cave) จะอยู่ภายในเขตของอุทยานแห่งชาติเขาสามร้อยยอด แนะนำว่าให้ตั้ง GPS ไปได้เลย เส้นทางขับง่าย โดยเขาจะมีค่าเข้าของผู้ใหญ่อยู่ที่ 40 บาท/คน ส่วนของเด็กราคา 20 บาท/คน (ค่าเข้าอุทยานแห่งชาติเขาสามร้อยยอดสามารถใช้ตั๋วรวมกันได้ทั้งหมด ยกเว้นการล่องเรือที่ต้องจ่ายแยก) ถ้าในวันนั้นเราซื้อตั๋วแล้วก็สามารถใช้ใบเดียวยิงยาวได้เลย และมีค่าจอดรถแยกคันละ 20 บาท <br> ชื่อถ้ำพระยานคร มาจากชื่อของพระยานคร (เจ้าเมืองนครศรีธรรมราช) ที่เคยเดินทางมาหลบพายุภายในถ้ำแห่งนี้โดยบังเอิญ ภายในถ้ำพระยานครมีสิ่งก่อสร้างที่สำคัญคือ "พระที่นั่งคูหาคฤหาสน์" ซึ่งเป็นพลับพลาแบบจตุรมุข สร้างขึ้นในสมัยรัชกาลที่ 5 เมื่อปี พ.ศ. 2433 พระที่นั่งนี้ถูกสร้างขึ้นในกรุงเทพมหานคร แล้วนำมาประกอบภายในถ้ำ โดยมีพระยาชลยุทธโยธินเป็นผู้ควบคุมการก่อสร้าง และพระบาทสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัวได้เสด็จมาทรงยกช่อฟ้าด้วยพระองค์เอง
+              <a href="https://www.google.com/maps/place/%E0%B8%96%E0%B9%89%E0%B8%B3%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B8%84%E0%B8%A3/@12.2058834,100.0076692,17z/data=!3m1!4b1!4m6!3m5!1s0x30fdc9865609a739:0x366fb27d391bf2c5!8m2!3d12.2058834!4d100.0102441!16s%2Fg%2F11cm04p938?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+          <div class="indicators"></div></center><br>
+        <nav class="menu-bar1">
+          <h1>ที่พัก</h1>
+         </nav>
+         <center><div class="container">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์1.avif" class="img">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์2.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์3.webp" class="img">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์4.webp" class="img">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์5.jpg" class="img">
+        </div>
+        <div class="text-box"><h1>โรงแรมอินเตอร์คอนติเนนตัล หัวหิน รีสอร์ท</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์1.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 33 33 ถ.เพชรเกษม ตำบลหัวหิน อำเภอหัวหิน ประจวบคีรีขันธ์ 77110 โทร:032616999 <br> หลีกหนีความวุ่นวายมาที่อินเตอร์คอนติเนนตัล หัวหิน รีสอร์ทอันสวยงามเพื่อการพักผ่อนริมชายหาดที่น่าจดจำ ที่พักสุดพิเศษแห่งนี้มอบบรรยากาศย่านที่มีชีวิตชีวาพร้อมทิวทัศน์มหาสมุทรอันตระการตา ห้องพักสะดวกสบายเหมาะสำหรับนักเดินทาง 2 ท่าน มีเครื่องปรับอากาศ ระเบียง/ชานเรือน และอินเทอร์เน็ตไร้สาย (Wi-Fi) ฟรี ผ่อนคลาย ริมสระน้ำพร้อมทิวทัศน์อันตระการตาหรือผ่อนคลายที่บาร์มีสไตล์ ใช้ประโยชน์จากการเข้าถึงชายหาดส่วนตัวและสำรวจสถานที่สำคัญใกล้เคียง เช่น ตลาดซิเคด้าและราชามวยไทย อินเตอร์คอนติเนนตัล มีร้านอาหารให้เลือกมากมายและทำเลสะดวกใกล้ชายหาดและศูนย์การค้า หัวหิน รีสอร์ท เป็นตัวเลือกที่สมบูรณ์แบบสำหรับการพักผ่อนที่ผ่อนคลายและสนุกสนาน
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%84%E0%B8%AD%E0%B8%99%E0%B8%95%E0%B8%B4%E0%B9%80%E0%B8%99%E0%B8%99%E0%B8%95%E0%B8%B1%E0%B8%A5+%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%B4%E0%B8%99+%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%97/@12.5483059,99.9630654,17z/data=!4m10!3m9!1s0x30fdab91830fa86d:0xb7b73457f9075f56!5m3!1s2025-05-15!4m1!1i2!8m2!3d12.5483059!4d99.9630654!16s%2Fg%2F1tnspcqz?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์1.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์1.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>ฮิลตัน หัวหิน รีสอร์ท แอนด์ สปา</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์2.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ 33 ถนนนเรศดำริห์ ตำบลหัวหิน อำเภอหัวหิน ประจวบคีรีขันธ์ 77110 โทร:032538999 <br> ฮิลตัน หัวหิน รีสอร์ท แอนด์ สปา: การพักผ่อนริมชายหาดพร้อมทิวทัศน์อ่าวไทย สระว่ายน้ำสไตล์ลากูน เทนนิส ร้านอาหารบนดาดฟ้า และสปาชั้นเลิศ ใกล้ตลาดกลางคืนและร้านอาหารที่หลากหลายเพื่อความสะดวกสบายและความหรูหรา ฮิลตัน หัวหิน รีสอร์ท แอนด์ สปา เป็นสถานที่พักผ่อนสุดหรูที่สมบูรณ์แบบสำหรับนักเดินทางสองคน เพลิดเพลินกับสระว่ายน้ำอันบริสุทธิ์ ทางเข้าชายหาดส่วนตัว และห้องอบไอน้ำเพื่อการฟื้นฟู ห้องพักมีสิ่งอำนวยความสะดวกที่ทันสมัย ​​เช่น เครื่องปรับอากาศ ระเบียง/ชานเรือนส่วนตัว และอุปกรณ์อาบน้ำฟรี ห้องพักบางห้องมีทิวทัศน์มหาสมุทรและทะเลอันสวยงาม สถานที่ท่องเที่ยวใกล้เคียง ได้แก่ ชายหาดหัวหิน มาร์เก็ตวิลเลจ หัวหิน และแกรนด์ไทยมวยหัวหิน การพักผ่อนและการผจญภัยรอคุณอยู่ที่สถานที่พักผ่อนอันน่าจดจำแห่งนี้
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1%E0%B8%AE%E0%B8%B4%E0%B8%A5%E0%B8%95%E0%B8%B1%E0%B8%99+%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%B4%E0%B8%99+%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%97+%E0%B9%81%E0%B8%AD%E0%B8%99%E0%B8%94%E0%B9%8C+%E0%B8%AA%E0%B8%9B%E0%B8%B2/@12.5706542,99.9604386,17z/data=!4m10!3m9!1s0x30fdabb307b40a09:0x1870194966d50edc!5m3!1s2025-05-15!4m1!1i2!8m2!3d12.5706542!4d99.9604386!16s%2Fg%2F1tgyt4n4?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์2.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์2.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>แอท ที บูทิก โฮเทล</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์3.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 582 หมู่ 1 คลองวาฬ เมือง ประจวบคีรีขันธ์ 77000 โทร:032661888 <br> วิวทะเลอันตระการตา ส่วนชายหาดส่วนตัว ห้องพักมีสไตล์ อาหารเลิศรส และบริการที่มีมาตรฐานสูง ทำเลใจกลางเมืองที่สมบูรณ์แบบสำหรับการสำรวจสถานที่ท่องเที่ยวและรับประทานอาหารที่ร้านอาหารท้องถิ่น ที่พักริมชายหาดที่มีชื่อเสียงเพื่อสร้างความทรงจำอันยาวนาน @T Boutique Hotel ตั้งอยู่ในคลองวาฬอันเงียบสงบ จังหวัดประจวบคีรีขันธ์ เป็นสถานที่พักผ่อนริมชายหาดอันเงียบสงบ เหมาะสำหรับนักเดินทางสองคนที่กำลังมองหาสถานที่พักผ่อนที่ผ่อนคลาย เพลิดเพลินไปกับชายหาดที่สวยงาม น้ำทะเลสีฟ้าใส และบรรยากาศอันเงียบสงบ ปล่อยใจไปกับสิ่งอำนวยความสะดวกสุดหรู เช่น สระว่ายน้ำ บริการนวด และชายหาดส่วนตัว ห้องพักที่ตกแต่งอย่างดีมีสิ่งอำนวยความสะดวกที่จำเป็น และวิวสวนสวยหรือทะเล สำรวจสถานที่ท่องเที่ยวในท้องถิ่นและลิ้มรสอาหารเลิศรสที่ร้านอาหารในบริเวณใกล้เคียง สร้างความทรงจำอันน่าจดจำที่ @T Boutique Hotel
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1+%E0%B9%81%E0%B8%AD%E0%B8%97%E0%B8%97%E0%B8%B5+%E0%B8%9A%E0%B8%B9%E0%B8%97%E0%B8%B5%E0%B8%84/@11.7384042,99.7811097,17z/data=!4m10!3m9!1s0x30fe85972e116e3b:0x3b3a4c10d5e0db9e!5m3!1s2025-05-15!4m1!1i2!8m2!3d11.7384042!4d99.7811097!16s%2Fg%2F11b7f_hhs4?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์3.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์3.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>โอ-เบย์ ดีไซน์ โฮเต็ล ประจวบ</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์4.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 159/1 Salacheep Road, Ampur Muang Prachuap Khiri Khan, Prachuap Khiri Khan Privince, ถนน สละชีพ อ. เมืองประจวบคีรีขันธ์, ประจวบคีรีขันธ์ 77000  <br> ค้นพบการพักผ่อนที่สมบูรณ์แบบสำหรับนักเดินทางสองคนที่โอเบย์ ดีไซน์โฮเต็ล ประจวบ ซึ่งตั้งอยู่ในใจกลางเมืองประจวบคีรีขันธ์ที่เงียบสงบ สถานที่ที่ตั้งอยู่ในจุดที่ดีเยี่ยมนี้มอบทิวทัศน์ชายฝั่งที่งดงามและการเข้าถึงตลาดท้องถิ่นที่มีเสน่ห์และสถานที่สำคัญทางประวัติศาสตร์ได้อย่างราบรื่น เพลิดเพลินกับการเข้าพักที่ไม่มีความยุ่งยากด้วยการเช็คอินส่วนตัว เช็คเอาท์ด่วน และการทำความสะอาดห้องพักทุกวันเพื่อให้ที่พักสะอาดหมดจด ผ่อนคลายในห้องพักที่มีอุปกรณ์ครบครันพร้อม WiFi ฟรี เครื่องปรับอากาศ และวิวเมืองที่สวยงาม เพียงไม่กี่นาทีจากที่นี่ สำรวจวัดธรรมิการามวรวิหารที่อยู่ใกล้เคียงและความงดงามของเขาช่องกระจก (ภูเขากระจก) ซึ่งทั้งสองแห่งมอบประสบการณ์ทางวัฒนธรรมอันล้ำค่า
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%AD-%E0%B9%80%E0%B8%9A%E0%B8%A2%E0%B9%8C+%E0%B8%94%E0%B8%B5%E0%B9%84%E0%B8%8B%E0%B8%99%E0%B9%8C+%E0%B9%82%E0%B8%AE%E0%B9%80%E0%B8%95%E0%B9%87%E0%B8%A5+%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%88%E0%B8%A7%E0%B8%9A+(O-Bay+Design+Hotel)/@11.8003719,99.7988073,17z/data=!4m10!3m9!1s0x30fe840fcb89bb1d:0x4347356f9dcc66ba!5m3!1s2025-05-15!4m1!1i2!8m2!3d11.8003719!4d99.7988073!16s%2Fg%2F11clwnn3l2?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์4.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์4.3.jpeg">
+        </div>
+      </div>
+        <div class="text-box"><h1>ฮอลิเดย์อินน์ รีสอร์ท วานา นาวา หัวหิน</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์5.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 129/129 Petchkasem Road Nong Gae Sub-District, Hua Hin, อำเภอหัวหิน ประจวบคีรีขันธ์ 77110 โทร:032809999 <br> ฮอลิเดย์ อินน์ รีสอร์ต วานา นาวา หัวหิน มีบริการเข้าสวนสนุกน้ำ Vana Nava Water Jungle ฟรี สระว่ายน้ำอินฟินิตี้บนชั้นดาดฟ้าที่มองเห็นวิวทะเล และพื้นกระจกของ Sky Deck การรับประทานอาหารบนดาดฟ้าเหมาะสำหรับคู่รักที่ต้องการความตื่นเต้นและการผ่อนคลาย รีสอร์ตตั้งอยู่ในเขาตะเกียบ มีชายหาดที่เงียบสงบ อาหารทะเลสดใหม่ และวิวจากเขาช่องกระจก ผู้เข้าพักสามารถผ่อนคลายที่สระว่ายน้ำหรืออ่างน้ำร้อน แล้วเพลิดเพลินกับไนต์คลับในที่พัก ห้องพักมี Wi-Fi ฟรี ระเบียงส่วนตัวหรือเฉลียง และสิ่งอำนวยความสะดวกที่ทันสมัย บางห้องมีวิวภูเขาหรือทะเล ใกล้เคียงมีตลาดมะขามและซิเคด้า มาร์เก็ต ทำให้เป็นจุดเริ่มต้นที่ดีสำหรับการสำรวจหัวหิน
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1%E0%B8%AE%E0%B8%AD%E0%B8%A5%E0%B8%B4%E0%B9%80%E0%B8%94%E0%B8%A2%E0%B9%8C+%E0%B8%AD%E0%B8%B4%E0%B8%99%E0%B8%99%E0%B9%8C+%E0%B8%A7%E0%B8%B2%E0%B8%99%E0%B8%B2+%E0%B8%99%E0%B8%B2%E0%B8%A7%E0%B8%B2+%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%B4%E0%B8%99/@12.532047,99.9637642,17z/data=!3m1!4b1!4m10!3m9!1s0x30fdabb2a01664ef:0x2649c3e3d21ef7c3!5m3!1s2025-05-15!4m1!1i2!8m2!3d12.532047!4d99.9637642!16s%2Fg%2F11f2qxt0wh?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์5.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักประจวบคีรีขันธ์5.3.webp">
+        </div>
+      </div>
+        <div class="indicators"></div></center>
+      </div>
+
+      <div id="info-เพชรบุรี" class="info-box">
+        <nav class="menu-bar1">
+          <h1>ที่เที่ยว</h1>
+         </nav>
+          <center><div class="container">
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี1.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี2.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี3.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี4.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี5.webp" class="img" />
+          </div>
+        <div class="text-box"><h1>หาดชะอำ</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี1.1.jpg" />
+            <div class="content">
+            <p>หาดชะอำ เป็นหาดที่มีชื่อเสียงของประเทศไทย ตั้งอยู่ที่อำเภอชะอำ จังหวัดเพชรบุรี และเป็นที่รู้จักของนักท่องเที่ยว มีร้านค้าและบริการมากมายอยู่บริเวณชายหาด เช่น ร้านอาหาร บริการเช่าเตียงผ้าใบ บริการขี่ม้า บริการเรือสกี เป็นต้น รัฐสมัยพระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัว ทรงโปรดปรานเมืองเพชรบุรีมาก จนได้ให้มีการสร้างค่ายหลวงบางทะลุ ที่หาดเจ้าสำราญ อำเภอเมืองเพชรบุรี แต่ที่ตำบลบางทะลุมีแมลงวันชุกชุม พระองค์จึงได้รับสั่งให้ย้ายการก่อสร้างมาทางทิศใต้ของชายฝั่งเพชรบุรี ณ หาดชะอำ เพื่อก่อสร้างพระราชวังฤดูร้อนที่ก่อสร้างด้วยไม้สักทั้งองค์พระตำหนัก และพระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัวพระราชทานนามพระราชวังแห่งนี้ว่า "พระราชนิเวศน์มฤคทายวัน" โดยมีตัวพระที่นั่งที่ยื่นออกไปยังทะเล กระนั้นมาชายหาดชะอำก็ได้เป็นชายหาดที่มีชื่อเสียงลำดับต้นๆของสถานที่ท่องเที่ยวของประเทศไทยตลอดมา
+              <a href="https://www.google.com/maps/place/%E0%B8%AB%E0%B8%B2%E0%B8%94%E0%B8%8A%E0%B8%B0%E0%B8%AD%E0%B8%B3/@12.7901725,99.9624726,14z/data=!3m1!4b1!4m6!3m5!1s0x30fd1ca836223eed:0x92726b8942251552!8m2!3d12.8031885!4d99.9874748!16s%2Fg%2F1211jpm2?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>วัดมหาธาตุวรวิหาร</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี2.1.jpeg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 7 ซอย เขางู ตำบล หน้าเมือง อำเภอเมืองราชบุรี ราชบุรี 70000 เปิดและปิดเวลา 07.00 - 17.00 น.ของทุกวัน <br> ดมหาธาตุวรวิหาร เป็นพระอารามหลวงชั้นตรี ชนิดวรวิหาร พบหลักฐานว่าสร้างมาตั้งแต่สมัยทวารวดี ถนนเขางู ตำบลหน้าเมือง อำเภอเมืองราชบุรี จังหวัดราชบุรี ตั้งอยู่เกือบใจกลางเมืองราชบุรี ทางฝั่งตะวันตกของแม่น้ำแม่กลอง เดิมเรียกว่า "วัดหน้าพระธาตุ" "วัดพระศรีรัตนมหาธาตุ" มีพระปรางค์ก่อด้วยศิลาแลงสูง 12 วา ภายในมีจิตรกรรมฝาผนังที่พระปรางค์ เป็นวัดที่ประดิษฐานพระบรมสารีริกธาตุ ปัจจุบันมีพระธรรมปัญญาภรณ์ (ไพบูลย์ ชินวํโส ป.ธ.๗) เจ้าคณะจังหวัดราชบุรี เป็นเจ้าอาวาส <br> แรกสร้างขึ้นตั้งแต่สมัยทวารวดี ราวพุทธศตวรรษที่ 13 ต่อมาในราวพุทธศตวรรษที่ 18 วัฒนธรรมขอมได้แพร่เข้าสู่ดินแดนราชบุรี จึงได้มีการก่อสร้างและดัดแปลงศาสนสถานกลางเมืองราชบุรีขึ้นเป็นพระปรางค์ และสร้างกำแพงศิลาแลงล้อมรอบเพื่อให้เป็นศูนย์กลางของเมืองตามคติความเชื่อเรื่องภูมิจักรวาลของขอมโบราณ ต่อมาในสมัยอยุธยาตอนต้นราวพุทธศตวรรษที่ 20 – 21 ได้มีการขยายพื้นที่ออกไปทางทิศตะวันตกและก่อสร้างพระปรางค์ขนาดใหญ่บนฐานเขียง ฐานชั้นล่างสุดเป็นแบบบัวลูกฟักสองชั้นรองรับเรือนธาตุเหนือขึ้นไปเป็นบัวเชิงบาตรรองรับส่วนยอดปักนพศูล พระปรางค์ประดับลวดลายปูนปั้นในส่วนต่างๆอย่างงดงาม สมัยกรุงศรีอยุธยาตอนกลางมีการก่อพระปรางค์บริวารเพิ่มสามองค์ต่อมาราวพุทธศตวรรษที่22ได้สร้างเจดีย์แปดเหลี่ยมจำนวน 5 องค์ล้อมไว้อีกชั้นบนฐานเดียวกัน ส่วนมุขยาวด้านหน้าสันนิษฐานว่าเป็นการต่อขึ้นใหม่สมัยกรุงศรีอยุธยาตอนปลาย-ต้นรัตนโกสินทร์ <br> ต่อมาในรัชสมัยพระบาทสมเด็จพระพุทธเลิศหล้านภาลัย ได้ทรงพระกรุณาโปรดเกล้าฯ ให้ย้ายเมืองราชบุรีจากฝั่งตะวันตกมายังฝั่งตะวันออก ประชาชนก็ย้ายตามความเจริญไปด้วย วัดมหาธาตุจึงกลายเป็นวัดร้างไม่มีพระสงฆ์จำพรรษา ต่อมาในรัชสมัยพระบาทสมเด็จพระนั่งเกล้าเจ้าอยู่หัว ใน พ.ศ. 2338 พระภิกษุองค์หนึ่งชื่อพระบุญมา ได้ธุดงค์มาเห็นวัดนี้มีสถานที่ร่มรื่น เหมาะสำหรับการปฏิบัติธรรมจึงได้ขอความร่วมมือจากพุทธศาสนิกชนช่วยกันปัดกวาดซ่อมแซมเสนาสนะต่างๆ ในที่สุด วัดมหาธาตุจึงกลับมาเป็นศูนย์กลางของศาสนาเช่นเดิม และยังคงเป็นมาจนถึงปัจจุบัน
+              <a href="https://www.google.com/maps/place/%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%98%E0%B8%B2%E0%B8%95%E0%B8%B8%E0%B8%A7%E0%B8%A3%E0%B8%A7%E0%B8%B4%E0%B8%AB%E0%B8%B2%E0%B8%A3+%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5/@13.5473662,99.8143679,17z/data=!3m1!4b1!4m6!3m5!1s0x30e326074eb70a49:0x1a481ba0a16ce90d!8m2!3d13.5473662!4d99.8143679!16s%2Fg%2F122xffy4?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>บ้านกร่างแคมป์</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี3.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบล ห้วยแม่เพรียง อำเภอแก่งกระจาน เพชรบุรี 76170 เปิดและปิดเวลา 09.00 - 17.00 น.ของทุกวัน <br>เป็นหนึ่งใน จุดชมผีเสื้อ ที่มีมากมายหลากหลายสายพันธุ์ของไทย โป่งผีเสื้อบ้านกร่าง นั้น จะเป็นจุดชมผีเสื้อของอุทยานแห่งชาติแก่งกระจาน ที่จะได้เห็นฝูงผีเสื้อบินไปมากกว่าพันตัวได้ และมีสายพันธุ์กว่า 200 ชนิดที่พบตามโป่งต่างๆ เราจะสามารถชมความสวยงามของผีเสื้อที่กำลังเกาะกินโป่งและน้ำหวานอยู่แถวบริเวณลำธารเมื่ออากาศร้อนและแหล่งน้ำเริ่มแห้ง ทำให้ผีเสื้อนานาชนิดจะพากันมากินเกลือตามดินโป่งหรือแหล่งน้ำแฉะๆ มากมายเลย <br> โดยจุดชมผีเสื้อ แคมป์บ้านกร่าง นี้ จะอยู่ห่างจากบริเวณอ่างเก็บน้ำเขื่อนแก่งกระจาน ไปอีกประมาณ 35 กิโลเมตร ถนนมีสภาพดีลาดยางเรียบร้อย รถยนต์สามารถขับไปถึงได้ เลยทำให้การเดินทางไม่เป็นอุปสรรคในการท่องเที่ยวเลย และก่อนเข้าสู่บริเวณของ แคมป์บ้านกร่าง ก็จะพบกับ อุโมงค์ต้นไม้ในระหว่างทางที่สวยมากๆ สามารถแวะถ่ายรูปได้เลย
+              <a href="https://www.google.com/maps/place/%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%81%E0%B8%A3%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%81%E0%B8%84%E0%B8%A1%E0%B8%9B%E0%B9%8C/@12.7987662,99.4542598,17z/data=!3m1!4b1!4m6!3m5!1s0x30fc8e0afe5ede37:0x747577deb1010dc8!8m2!3d12.7987662!4d99.4542598!16s%2Fg%2F1hdzfjd1q?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>พระราชนิเวศน์มฤคทายวัน</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี4.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 1281 เพชรเกษม ถนนเพชรเกษม ตำบล ชะอำ อำเภอชะอำ เพชรบุรี 76120 เปิดและปิดเวลา 09.00 - 16.00 น.ของทุกวัน <br> พระราชนิเวศน์มฤคทายวัน ตั้งอยู่ที่อำเภอชะอำ จังหวัดเพชรบุรี เป็นที่ประทับแปรพระราชฐานในฤดูร้อนของพระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัวสร้างขึ้นระหว่าง พ.ศ. 2466 - 2467 โดยมีนายแอร์โกเล มันเฟรดี (Ercole Manfredi) สถาปนิกชาวอิตาเลียนเป็นผู้ออกแบบ หมู่พระตำหนักมีลักษณะทางสถาปัตยกรรมในรูปแบบไทยผสมตะวันตก มีการใช้ไม้สักทองประกอบขึ้นทั้งหลัง โดยยกใต้เสาตอม่อคอนกรีตเสริมเหล็กเหนือชายหาด <br> พระราชนิเวศน์มฤคทายวัน เป็นที่ประทับแปรพระราชฐานในฤดูร้อนของพระบาทสมเด็จพระมงกุฎเกล้าเจ้าอยู่หัวจัดเป็นที่ประทับที่มีความเรียบง่ายที่สุดซึ่งสร้างตามพระราชประสงค์ของพระองค์เองเพื่อไม่ให้เป็นการเปลืองพระราชทรัพย์จนเกินไปโดยพระองค์เสด็จมาประทับ ณ พระราชนิเวศน์แห่งนี้ถึงสองครั้ง ครั้งแรกเมื่อปี พ.ศ. 2467 เป็นเวลา 3 เดือน และครั้งที่สอง ปี พ.ศ. 2468 หลังจากนั้นก็ไม่ได้เสด็จมาประทับอีกเลยเนื่องจาก 5 เดือนต่อมาพระองค์ก็เสด็จสวรรคต ณ พระบรมมหาราชวัง
+              <a href="https://www.google.com/maps/place/%E0%B8%9E%E0%B8%A3%E0%B8%B0%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%99%E0%B8%B4%E0%B9%80%E0%B8%A7%E0%B8%A8%E0%B8%99%E0%B9%8C%E0%B8%A1%E0%B8%A4%E0%B8%84%E0%B8%97%E0%B8%B2%E0%B8%A2%E0%B8%A7%E0%B8%B1%E0%B8%99/@12.6985578,99.9632297,17z/data=!3m1!4b1!4m6!3m5!1s0x30fd03cfccea5397:0x757ae201adfb6433!8m2!3d12.6985578!4d99.9632297!16s%2Fm%2F0b77syn?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>The Field Animals Dream</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวเพชรบุรี5.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 55 หมู่ที่ 2 ท่ายาง หนองจอก อำเภอท่ายาง เพชรบุรี 76130 เปิดและปิดเวลา 08.00 - 18.30 น.ของทุกวัน <br> สำหรับเด็ก ๆ แล้วสิ่งที่ดึงดูดให้พวกเขาเพลินเพลินและใช้เวลาได้นานโดยไม่งอแงก็คงมีไม่กี่สถานที่ที่อยู่ในลิสต์ของคุณพ่อคุณแม่ หนึ่งในนั้นจะต้องมีสวนสัตว์แน่นอน สถานที่เสริมสร้างพัฒนาการของลูกน้อยนอกหนังสือที่พ่อแม่อ่านให้ฟังทุก ๆ คืนก่อนนอน เพื่อให้ลูกได้เจอสัตว์เหล่านั้นตัวเป็น ๆ จากการที่ลูกน้อยได้จินตนาการตามรูปภาพในหน้าหนังสือที่เขาดู <br> เด็ก ๆ จะเพลิดเพลินกับเหล่าบรรดาสัตว์ที่อยู่ในนั้น โดยมีทั้งสัตว์บก สัตว์น้ำ สัตว์ปีก หรือแม้กระทั่งสัตว์ครึ่งบกครึ่งน้ำ นอกจากเพลินเพลินจากการเที่ยวชมแล้วนั้นทางสวนสัตว์ยังมีกิจกรรมให้เด็กได้มีส่วนร่วมในการช่วยเลี้ยงสัตว์เหล่านั้นด้วยโดยการป้อนอาหารซึ่งกิจกรรมเหล่านี้นอกจากทำให้เด็ก ๆ ได้เกิดความรักความเมตตาที่มีต่อสัตว์แล้วนั้นพวกเขายังได้สัมผัสตัวเป็น ๆ และยังเรียนรู้ด้วยว่าสัตว์ที่เขาชื่นชอบสามารถทานอะไรเป็นอาหารได้บ้าง โดยทาง The field animal dream จะมีป้ายบอกประเภทของสัตว์และคำแนะนำที่ควรปฏิบัติตัวต่อสัตว์เหล่านั้นให้ผู้ปกครองได้ศึกษาก่อนให้ลูก ๆ สัมผัส หลังจากเหนื่อยล้าจากการเที่ยวชมแล้วนั้นทาง ทาง The field animal dream ยังมีอาคารติดแอร์เย็น ๆ รองรับเพื่อให้เด็ก ๆ พร้อมผู้ปกครองนั่งพักพร้อมทั้งมีอาหารและเครื่องดื่มจำหน่ายอีกด้วย
+              <a href="https://www.google.com/maps/place/The+field+animal+dream+%E0%B9%80%E0%B8%94%E0%B8%AD%E0%B8%B0%E0%B8%9F%E0%B8%B4%E0%B8%A5%E0%B8%A5%E0%B9%8C%E0%B9%81%E0%B8%AD%E0%B8%99%E0%B8%99%E0%B8%B4%E0%B8%A1%E0%B8%AD%E0%B8%A5%E0%B8%94%E0%B8%A3%E0%B8%B5%E0%B8%A1/@12.9170973,99.9291669,17z/data=!3m1!4b1!4m6!3m5!1s0x30fd1e38a42dfec7:0x3b590ecad97242e6!8m2!3d12.9170973!4d99.9291669!16s%2Fg%2F11b_2t11sl?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+          <div class="indicators"></div></center><br>
+        <nav class="menu-bar1">
+          <h1>ที่พัก</h1>
+         </nav>
+         <center><div class="container">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี1.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี2.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี3.webp" class="img">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี4.webp" class="img">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี5.webp" class="img">
+        </div>
+        <div class="text-box"><h1>Casuarina Resort</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี1.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ ตำบล ปึกเตียน อำเภอท่ายาง เพชรบุรี 76130 โทร:032706648 <br> หลีกหนีสู่หรรษา คาชัวรินา ชะอำ สถานที่พักผ่อนริมชายหาดอันเงียบสงบบนหาดปึกเตียน เพชรบุรี ห้องพักกว้างขวางเหมาะสำหรับนักเดินทางสองคนที่แสวงหาความเงียบสงบ ห้องพักกว้างขวางมอบความสะดวกสบายด้วยเครื่องปรับอากาศ Wi-Fi ฟรี และฝักบัวอาบน้ำเพื่อความสดชื่น ดื่มด่ำกับความพิเศษสุด สิ่งอำนวยความสะดวก เช่น สระว่ายน้ำ บริการนวดผ่อนคลาย และอาหารเลิศรสที่ร้านอาหารชั้นนำ ดื่มด่ำไปกับวิวทะเลที่สวยงาม เพลิดเพลินกับชายหาดส่วนตัว และเอร็ดอร่อยกับอาหารเช้าแสนอร่อยพร้อมชมเกลียวคลื่นอันเงียบสงบ สำรวจสถานที่ท่องเที่ยวในบริเวณใกล้เคียงและสัมผัสประสบการณ์การผ่อนคลายอย่างแท้จริงที่ Hansar คาชัวริน่า ชะอำ
+            <a href="https://www.google.com/maps/place/Casuarina+Resort/@12.9260617,100.026209,17z/data=!4m10!3m9!1s0x30fd1903a2736f9f:0xf51b88953bd41d98!5m3!1s2025-05-15!4m1!1i2!8m2!3d12.9260617!4d100.026209!16s%2Fg%2F1v75pbp7?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี1.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี1.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>Anantara Hua Hin Resort</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี2.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 43/1 ถ.เพชรเกษม ตำบลหัวหิน อำเภอหัวหิน ประจวบคีรีขันธ์ 77110 โทร:032520250 <br> อนันตรา หัวหิน รีสอร์ต เป็นสถานที่พักผ่อนที่เงียบสงบสำหรับนักเดินทางคนเดียวบนชายหาดหัวหิน เพลิดเพลินไปกับบรรยากาศไทยที่เงียบสงบ การเข้าถึงชายหาดส่วนตัว และทะเลสาบที่สวยงาม ห้องพักกว้างขวางมีบริการ Wi-Fi ฟรีพร้อมวิวทะเลหรือวิวสระว่ายน้ำให้เลือก ผ่อนคลายในสระว่ายน้ำสดชื่นพร้อมบาร์ในสระหรือสำรวจตลาดที่มีชีวิตชีวาใกล้เคียง รีสอร์ตตั้งอยู่ห่างจากหาดสวนสนประดิพัทธ์เพียง 646 เมตร สะดวกต่อการเข้าถึงชายฝั่งที่สวยงาม ด้วยบาร์ที่มีชีวิตชีวา ระบบรักษาความปลอดภัยด้วยกล้องวงจรปิดตลอด 24 ชั่วโมง และบริการรถรับส่ง อนันตรา หัวหิน รับประกันการเข้าพักที่ราบรื่นและปลอดภัยสำหรับนักผจญภัยคนเดียวทุกคน
+            <a href="https://www.google.com/maps/place/%E0%B8%AD%E0%B8%99%E0%B8%B1%E0%B8%99%E0%B8%95%E0%B8%A3%E0%B8%B2+%E0%B8%AB%E0%B8%B1%E0%B8%A7%E0%B8%AB%E0%B8%B4%E0%B8%99+%E0%B8%A3%E0%B8%B5%E0%B8%AA%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%97/data=!4m2!3m1!1s0x0:0x4dfe520472ab7ba4?sa=X&ved=1t:2428&ictx=111" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี2.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี2.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>ภัทราศรม วิลล่า</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี3.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ ที่อยู่: 261, 58 ซอย ร่วมจิตร ตำบล ชะอำ อำเภอชะอำ เพชรบุรี 76120 โทร:0659765456 <br> ภัทราศรม วิลล่า เป็นสถานที่พักผ่อนที่เหมาะสำหรับนักเดินทางสองคนที่ต้องการหลีกหนีความวุ่นวาย ตั้งอยู่บนชายหาดชะอำ เสนอความสงบพร้อมกับชายหาดที่สวยงามและตลาดอาหารทะเลที่มีชีวิตชีวาเพื่อประสบการณ์ท้องถิ่นที่แท้จริง ผู้เข้าพักสามารถผ่อนคลายด้วยการว่ายน้ำในสระว่ายน้ำของอาคารหรือพักผ่อนบนชายหาดซึ่งอยู่ห่างออกไปเพียงไม่กี่ก้าว ห้องพักแต่ละห้องมี Wi-Fi ฟรี เครื่องปรับอากาศ และระเบียงส่วนตัวหรือเฉลียง ห้องพักบางห้องมีวิวสระว่ายน้ำที่ผ่อนคลาย เหมาะสำหรับการพักผ่อนหลังจากวันแห่งการสำรวจ เพลิดเพลินกับความสะดวกสบายที่ไร้รอยต่อด้วยบริการรูมเซอร์วิสและบริการอาหารเช้าแบบพกพาที่สะดวกสบาย
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1%E0%B8%A0%E0%B8%B1%E0%B8%97%E0%B8%A3%E0%B8%B2%E0%B8%A8%E0%B8%A3%E0%B8%A1+%E0%B8%A7%E0%B8%B4%E0%B8%A5%E0%B8%A5%E0%B9%88%E0%B8%B2/@12.7932165,99.9831858,17z/data=!4m10!3m9!1s0x30fd034857164827:0x3ec4536e9227d3cf!5m3!1s2025-05-15!4m1!1i2!8m2!3d12.7932165!4d99.9831858!16s%2Fg%2F11lh68j16f?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี3.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี3.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>ทะเล โฮเต็ล แอนด์ วิลลา</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี4.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 2 ถนน ร่วมจิต ตำบล ชะอำ อำเภอชะอำ เพชรบุรี 76120 โทร:0834636951 <br> หลีกหนีความวุ่นวายไปที่ทะเล โฮเต็ล แอนด์ วิลล่า ซึ่งตั้งอยู่ท่ามกลางมนต์เสน่ห์สบายๆ ของชายหาดชะอำ ที่พักริมชายหาดแห่งนี้มอบสถานที่พักผ่อนที่สดชื่นสำหรับนักเดินทาง 2 ท่านที่แสวงหาความเงียบสงบและผ่อนคลาย ผ่อนคลายริมสระว่ายน้ำระยิบระยับหรือเพลิดเพลินกับการเข้าถึงโดยตรงไปยังสถานที่สวยงามตระการตา ห้องพักบรรยากาศสบายๆ มีเครื่องปรับอากาศ ระเบียง/ชานเรือนส่วนตัว ตู้เซฟในห้องพัก และฝักบัวเพื่อความสดชื่น เลือกห้องพักพร้อมวิวสวนเพื่อดื่มด่ำกับความงามของธรรมชาติ เริ่มต้นวันใหม่ด้วยอาหารเช้าแสนอร่อยและ ใช้ประโยชน์จากการเข้าถึงที่สะดวกไปยังตลาดกลางคืนในบริเวณใกล้เคียง ทะเล โฮเต็ล แอนด์ วิลล่า คือสถานที่พักผ่อนริมชายฝั่งที่สมบูรณ์แบบของคุณด้วยบริการที่ดีเยี่ยมและบรรยากาศที่มีเสน่ห์
+            <a href="https://www.google.com/maps/place/Talay+Hotel+%26+Villa/data=!4m2!3m1!1s0x0:0xe043adb6aa50eddc?sa=X&ved=1t:2428&ictx=111" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี4.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี4.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>แวนน์ หัวหิน รีสอร์ต</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี5.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 330 Petchkasam Road, ตำบล ชะอำ อำเภอชะอำ เพชรบุรี 76120 โทร:032470624 <br> ค้นพบสถานที่พักผ่อนที่เงียบสงบสำหรับนักเดินทางสองคนที่แวนน์ หัวหิน รีสอร์ต ตั้งอยู่บนชายหาดชะอำที่เงียบสงบ สถานที่นี้มีชายหาดที่สวยงามและตลาดอาหารทะเลที่มีชีวิตชีวา เหมาะสำหรับการหลบหนีไปพักผ่อนริมทะเล ผู้เข้าพักสามารถเริ่มต้นวันใหม่ด้วยอาหารเช้าในห้องที่หลากหลาย ผ่อนคลายที่สระว่ายน้ำที่มีทิวทัศน์สวยงาม หรือเพลิดเพลินกับบาร์ที่น่าดึงดูด ห้องพักมี Wi-Fi ฟรีและเครื่องปรับอากาศ และห้องพักบางห้องมีทางเข้าสระว่ายน้ำโดยตรงพร้อมวิวสระว่ายน้ำที่สวยงามจากระเบียงหรือเทอเรซ การตกแต่งภายในที่มีสไตล์และสิ่งพิเศษเพิ่มเติมเช่นของว่างฟรีช่วยเพิ่มประสบการณ์การเข้าพักของคุณ ตั้งอยู่ใกล้กับสถานที่ท่องเที่ยวในท้องถิ่นอย่างสะดวก เป็นสถานที่พักผ่อนที่สมบูรณ์แบบสำหรับการสำรวจและผ่อนคลาย
+            <a href="https://www.google.com/maps/place/Vann+Hua+Hin+Resort/data=!4m2!3m1!1s0x0:0xe4a0a72f9687839c?sa=X&ved=1t:2428&ictx=111" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี5.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักเพชรบุรี5.3.webp">
+        </div>
+      </div>
+        <div class="indicators"></div></center>
+      </div>
+
+      <div id="info-ราชบุรี" class="info-box">
+        <nav class="menu-bar1">
+          <h1>ที่เที่ยว</h1>
+         </nav>
+          <center><div class="container">
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี1.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี2.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี3.webp" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี4.jpg" class="img" />
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี5.webp" class="img" />
+          </div>
+        <div class="text-box"><h1>ณ สัทธา อุทยานไทย</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี1.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 41 1 ถนน สมุทรสงคราม ตำบล วังเย็น อำเภอบางแพ ราชบุรี 70160 เปิดและปิดเวลา 09.00 - 22.00 น.ของทุกวัน <br> จากกรุงเทพฯ ไปไม่ไกลแค่ 2 ชั่วโมงเท่านั้น เราก็มาถึง ณ สัทธา อุทยานไทย อุทยานแห่งการเรียนรู้ และอนุรักษ์วัฒนธรรมไทย ที่จังหวัดราชบุรี ที่นี่มีพื้นที่ถึง 42 ไร่ กว้างขวางมากๆ และสร้างขึ้นภายใต้แนวคิด “เพราะ...สาระความรู้ไม่ได้มีแค่ในห้องเรียนและตำรา เพราะ...ความสุขสงบไม่ได้มีเพียงในวัดวาอาราม” นั่นเองทำให้ที่นี่ไม่ใช่แค่ที่เที่ยวค่ะ แต่ยังสอดแทรกเรื่องของความศรัทธา ความรู้ คติธรรม ความเชื่อที่อยู่คู่กับคนไทยมาช้านาน รวมถึงขนบธรรมเนียมวัฒนธรรมไทยเอาไว้ด้วย
+              <a href="https://www.google.com/maps/place/%E0%B8%93+%E0%B8%AA%E0%B8%B1%E0%B8%97%E0%B8%98%E0%B8%B2+%E0%B8%AD%E0%B8%B8%E0%B8%97%E0%B8%A2%E0%B8%B2%E0%B8%99%E0%B9%84%E0%B8%97%E0%B8%A2/@13.701363,99.9021998,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2dff7d5609a19:0xdeb4bba8aa44a624!8m2!3d13.701363!4d99.9021998!16s%2Fg%2F1tdvm5nb?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ตลาดนํ้าดําเนินสะดวก</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี2.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ ตำบล ดำเนินสะดวก อำเภอดำเนินสะดวก ราชบุรี 70130 เปิดและปิดเวลา 08.00 - 16.00 น.ของทุกวัน <br> ตลาดน้ำดำเนินสะดวก หรือที่ชาวบ้านเรียกว่า ตลาดน้ำคลองต้นเข็ม เป็นตลาดน้ำในอำเภอดำเนินสะดวก จังหวัดราชบุรี ซึ่งอยู่ห่างจากกรุงเทพทางตะวันตกเฉียงใต้ประมาณ 100 กิโลเมตร (62 ไมล์) เป็นจุดดึงดูดนักท่องเที่ยวหลักทั้งในและต่างประเทศ และถือเป็นตลาดน้ำที่โด่งดังที่สุด ใน พ.ศ. 2409 ถึง 2411 พระบาทสมเด็จพระจอมเกล้าเจ้าอยู่หัวมีพระราชดำรัสสั่งให้ขุดคลองดำเนินสะดวกที่มีความยาว 32-กิโลเมตร (20-ไมล์) เพื่อเชื่อมกับแม่น้ำแม่กลองและแม่น้ำท่าจีน ทำให้เกิดตลาดน้ำในคลองนี้ และชาวบ้านขุดคลองย่อยอีกประมาณ 200 แห่ง ตลาดน้ำหลักมีชื่อว่า ตลาดลัดพลี ซึ่งอยู่ติดกับวัดและมีการใช้งานไปจนกระทั่งมีการพัฒนาถนนแทนการสัญจรทางน้ำใน พ.ศ. 2510 ทำให้ตลาดน้ำเก่าหลายแห่งหายไปในช่วงกลางคริสต์ศตวรรษที่ 20 ใน พ.ศ. 2514 การท่องเที่ยวแห่งประเทศไทยได้ทำให้ตลาดลัดพลีเป็นสถานที่ดึงดูดนักท่องเที่ยวชาวต่างชาติ ใน พ.ศ. 2524 มีการสร้างถนนใหม่ไปยังคลองต้นเข็ม และมีผู้ประกอบการภาคเอกชนเข้ามาทำกิจการในตลาดน้ำดำเนินสะดวก
+              <a href="https://www.google.com/maps/place/%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%94%E0%B8%B3%E0%B9%80%E0%B8%99%E0%B8%B4%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%94%E0%B8%A7%E0%B8%81/@13.5201684,99.8823867,13z/data=!4m10!1m2!2m1!1z4LiV4Lil4Liy4LiU4LiZ4LmN4LmJ4Liy4LiU4LmN4Liy4LmA4LiZ4Li04LiZ4Liq4Liw4LiU4Lin4LiB!3m6!1s0x30e2d7b8c9fd1f51:0x584ed0368907e1db!8m2!3d13.5201684!4d99.9586044!15sCjzguJXguKXguLLguJTguJnguY3guYnguLLguJTguY3guLLguYDguJnguLTguJnguKrguLDguJTguKfguIFaQiJA4LiV4Lil4Liy4LiUIOC4meC5jeC5ieC4siDguJTguY3guLIg4LmA4LiZ4Li04LiZIOC4quC4sOC4lOC4p-C4gZIBD2Zsb2F0aW5nX21hcmtldKoBkQEQASonIiPguJXguKXguLLguJQg4LiZ4LmN4LmJ4LiyIOC4lOC5jeC4sig1Mh4QASIaWXuwnLHMF9d3Dsj4P9gQ_hvxkF0fCjv-oa8yRBACIkDguJXguKXguLLguJQg4LiZ4LmN4LmJ4LiyIOC4lOC5jeC4siDguYDguJnguLTguJkg4Liq4Liw4LiU4Lin4LiB4AEA!16s%2Fg%2F121k3n8w?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ธารนํ้าร้อนบ่อคลึง</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี3.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 27 หมู่ 7 บ่อ คลึง ต สวนผึ้ง อ สวนผึ้ง, ราชบุรี เปิดและปิดเวลา 08.00 - 18.00 น.ของทุกวัน <br> ธารน้ำร้อนเล็กๆ ที่ธรรมชาติให้มา  ถือว่าเป็นธารน้ำร้อนที่ใกล้กรุงมากที่สุด อยู่ใน อ.สวนผึ้ง จ.ราชบุรี ขับรถจากกรุงเทพฯ มาประมาณ 2 ชม.  ธารน้ำร้อนกำเนิดจากน้ำแร่ไหลซึมจากน้ำใต้ดินผ่านซอกหินจากเทือกเขาตะนาวศรี ไหลลงมาไม่ขาดสายตามลำธารเล็กๆ ผ่านก้อนหินกรวดทรายและป่าไม้เบญจพรรณ เป็นระยะทางประมาณ 150 เมตร ลงมายังบ่อน้ำร้อนด้านล่าง  บ่อน้ำแร่ร้อนที่นี่มีบรรยากาศแบบไทยๆ  อย่าคาดหวังถึงความสวยงามเหมือนออนเซนของญี่ปุ่น  แต่ประโยชน์ที่ได้จากวารีบำบัดถือว่าคุ้มค่ากับการเดินทางมา ธารน้ำร้อนบ่อคลึง เป็นของเอกชน ผู้ค้นพบ คือ นายประยูร โมนยะกุล ค้นพบเมื่อ ปี พ.ศ. 2468  ธารน้ำร้อนบ่อคลึง เป็นแหล่งน้ำที่มีอุณหภูมิสูงกว่าร่างกายมนุษย์ไหลขึ้นมาจากใต้ดิน น้ำที่ขึ้นมาจากต้นธารอุณหภูมิประมาณ 60 องศาเซลเซียส น้ำร้อนที่นี่ไม่มีกลิ่นฉุน ไม่มีแร่ธาตุที่ระคายเคือง ใสสะอาด ประกอบด้วยธาตุคาร์บอน เกลือและแร่ธาตุอื่นๆ น้อยกว่า 1 กรัม/ลิตร เป็นน้ำพุร้อนส่วนใหญ่ที่พบในประเทศไทย มีน้ำร้อนไหลตลอดทั้งปี แม้ในฤดูแล้งปริมาณน้ำไหลจะน้อยลงบ้างไม่ถึงกับแห้ง
+              <a href="https://www.google.com/maps/place/%E0%B8%98%E0%B8%B2%E0%B8%A3%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%A3%E0%B9%89%E0%B8%AD%E0%B8%99%E0%B8%9A%E0%B9%88%E0%B8%AD%E0%B8%84%E0%B8%A5%E0%B8%B6%E0%B8%87/@13.5192574,99.2456602,17z/data=!3m1!4b1!4m6!3m5!1s0x30e356d5372ad753:0x982882995e780d8a!8m2!3d13.5192574!4d99.2456602!16s%2Fg%2F11bvcvfgzz?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>ไร่ปลูกรัก</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี4.1.webp" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 130 ม.1 ต.วังเย็น อำเภอบางแพ ราชบุรี 70160 เปิดและปิดเวลา 08.00-18.00 น.ของทุกวัน <br> ไร่ปลูกผักอินทรีย์บนเนื้อที่ 60 ไร่ ภายในมีแปลงผักที่ปลูกสลับหมุนเวียนกันในพื้นที่ มีทั้งแปลงผักสลัด อาทิ คอสเขียวและคอสแดง โอ๊คลีฟเขียว โอ๊คลีฟแดง สลัดแก้ว ผักกาดหอม ผักร็อคเก็ต แปลงผักจีน อาทิ ผักคะน้า ผักฮ่องเต้ ผักกวางตุ้ง ผักบุ้งจีน แปลงผักลูกและผลไม้ อาทิ แตงกวา ข้าวโพดหวาน กระเจี๊ยบ ฟักทอง กล้วยน้ำว้า มะเขือเทศเชอรี่ ไร่ปลูกรักจัดกิจกรรมสำหรับการเรียนรู้เกษตรอินทรีย์ โดยจัดเป็นโปรแกรมครึ่งวันและหนึ่งวัน ผู้สนใจเข้าชมกรุณาติดต่อล่วงหน้า เปิดบริการทุกวัน เวลา 08.00-18.00 น. การเข้าชมและทำกิจกรรมที่ไร่ปลูกรัก - ผู้ใหญ่ ราคา 750 บาท/คน - เด็ก อายุ 3-12 ปี ราคา 450 บาท/คน การเดินทาง : ใช้ถนนเพชรเกษม ผ่านสหการณ์โคนมหนองโพ กิโลเมตรที่ 73 ตรงไปประมาณ 5 กิโลเมตร ไร่ปลูกรัก อยู่กิโลเมตรที่ 78 ด้านซ้ายมือ สอบถามข้อมูล โทร. 08 6332 7365, thaiorganicfood@gmail.com, www.thaiorganicfood.com
+              <a href="https://www.google.com/maps/place/%E0%B9%84%E0%B8%A3%E0%B9%88%E0%B8%9B%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B8%A3%E0%B8%B1%E0%B8%81%C2%AE/@13.720187,99.90529,17z/data=!3m1!4b1!4m6!3m5!1s0x30e2e0017ebc8727:0xf5666a837d9675dd!8m2!3d13.720187!4d99.90529!16s%2Fg%2F1hd_zh4s9?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+        <div class="text-box"><h1>วัดขนอนหนังใหญ่</h1>
+          <div class="card">
+            <img src="imgตะวันตก/bgที่เที่ยวราชบุรี5.1.jpg" />
+            <div class="content">
+            <p>ตั้งอยู่ที่ 1 ตำบล สร้อยฟ้า อำเภอโพธาราม ราชบุรี 70120 เปิดและปิดเวลา 08.00 - 17.30 น.ของทุกวัน <br> หนังใหญ่  เป็นสมบัติทางวัฒนธรรมไทย  ซึ่งได้รับการยกย่องว่าเป็นการแสดงชั้นสูง  เป็นการแสดงที่รวมศิลปะที่ทรงคุณค่าหลายแขนง  ได้แก่  ด้านศิลปะการออกแบบลวดลายไทยเชิงจิตรกรรมที่มีความวิจิตรบรรจง  ผสมกับฝีมือช่างแกะสลักที่ประณีต  เมื่อแสดงก็จะมีการนำศิลปะทางนาฏศิลปืการละคร  ที่เคลื่อนไหวอย่างได้อารมณ์ ตามเนื้อเรื่อง  ประกอบกับบทพากย์  บทเจรจา  บทขับร้อง  ดนตรีปี่พาทย์  ทำให้เกิดความเข้าใจในเรื่องราว  และให้อรรถรสทางศิลปะแก่ผู้ชมได้อย่างสมบูรณ์  การแสดงหนังใหญ่จึงมีคุณค่าทางศิลปะสูง  และแสดงถึงอัจฉริยภาพของบรรพบุรุษไทยได้เป็นอย่างดี <br>ประวัติความเป็นมา <br> มหรสพที่เก่าแก่ของไทยนี้ กล่าวกันว่ามีมาตั้งแต่สมัยสุโขทัย แต่หลักฐานการแสดงหนังใหญ่เริ่มมี สมัยกรุงศรีอยุธยา ในสมัยของสมเด็จพระรามาธิบดีที่ 1 (พระเจ้าอู่ทอง) นับเป็นมหารสพที่สร้างชื่อเสียงให้กับประเทศไทย ในสมัยรัตนโกสินทร์ปรากฏหลักฐานในการแสดงหนังใหญ่ ตั้งแต่สมัยสมเด็จพระพุทธยอดฟ้าจุฬาโลกมหาราช (ร.1) ว่าทรงพระราชนิพนธ์บทละครเรื่องอิเหนา เพื่อใช้แสดงเพิ่มขึ้นจากเรื่องรามเกียรติ์ สมัยสมเด็จพระพุทธเลิศหล้านภาลัย (ร.2) มีหลักฐานการสร้างตัวหนังใหญ่และบทวรรณคดีที่ใช้ในเรื่องรามเกียรติ์ ใช้แสดงหนังใหญ่ชุดพระนครไหว ซึ่งต่อมาได้มีการนำมาเก็บไว้ ณ โรงละครแห่งชาติหลังเก่า แต่ถูกไฟไหม้เกือบหมด สมัยสมเด็จพระจุลจอมเกล้าเจ้าอยู่หัว (ร.5) พบการทำหนังใหญ่ 2 แห่ง ได้แก่ หนังใหญ่วัดสว่างอารมณ์ จังหวัดสิงห์บุรี และหนังใหญ่วัดขนอน จังหวัดราชบุรี
+              <a href="https://www.google.com/maps/place/%E0%B8%9E%E0%B8%B4%E0%B8%9E%E0%B8%B4%E0%B8%98%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C%E0%B8%AB%E0%B8%99%E0%B8%B1%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%8D%E0%B9%88%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%82%E0%B8%99%E0%B8%AD%E0%B8%99/@13.726442,99.8448402,17z/data=!3m1!4b1!4m6!3m5!1s0x30e31f65484662f5:0x77bda674b29b5d5c!8m2!3d13.726442!4d99.8448402!16s%2Fg%2F11b6gf7zhm?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 100%; font-size: 25px;">แผนที่</a></p>
+          </div></div></div>
+          <div class="indicators"></div></center><br>
+        <nav class="menu-bar1">
+          <h1>ที่พัก</h1>
+         </nav>
+         <center><div class="container">
+          <img src="imgตะวันตก/bgที่พักราชบุรี1.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักราชบุรี2.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักราชบุรี3.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักราชบุรี4.jpg" class="img">
+          <img src="imgตะวันตก/bgที่พักราชบุรี5.jpg" class="img">
+        </div>
+        <div class="text-box"><h1>phingphayla photharam</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักราชบุรี1.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 67 ตำบล ท่าชุมพล อำเภอโพธาราม ราชบุรี 70120 โทร:0992369495 <br> หลีกหนีสู่เมืองโพธารามอันทรงเสน่ห์ ราชบุรี เพื่อการพักผ่อนอันเงียบสงบและมีสไตล์ พักที่พิงเพลา โพธาราม อันหรูหรา ที่มีการออกแบบที่น่าประทับใจ ห้องพักหรูหรา และสวนอันเงียบสงบพร้อมสระว่ายน้ำที่ยอดเยี่ยม สำรวจสถานที่ท่องเที่ยวของเมืองที่เข้าถึงตลาดได้ง่าย . เพลิดเพลินกับค่ำคืนอันแสนสบายในห้องพักทันสมัยพร้อมทิวทัศน์อันงดงาม เครื่องปรับอากาศ และอินเทอร์เน็ตฟรี เริ่มต้นวันใหม่ด้วยอาหารเช้าแสนอร่อยและผ่อนคลายบนสนามหญ้าริมแม่น้ำที่สวยงาม เข้าพักอย่างไม่ยุ่งยากด้วยที่จอดรถและบริการทำความสะอาดรายวัน
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1+%E0%B8%9E%E0%B8%B4%E0%B8%87-%E0%B9%80%E0%B8%9E-%E0%B8%A5%E0%B8%B2+%E0%B9%82%E0%B8%9E%E0%B8%98%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%A1+(Phingphayla)/@13.6920484,99.8238606,17z/data=!3m1!4b1!4m10!3m9!1s0x30e321d9d71ad3bf:0xd05f7e20e580e75c!5m3!1s2025-05-15!4m1!1i2!8m2!3d13.6920484!4d99.8238606!16s%2Fg%2F11f1vp105y?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักราชบุรี1.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักราชบุรี1.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>โรงแรมไนน์ริเวอร์</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักราชบุรี2.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 469 Rimnam Rd, T, อำเภอบ้านโป่ง ราชบุรี 70110 โทร:032221555 <br> สัมผัสมนต์เสน่ห์ของวัฒนธรรมไทยดั้งเดิมในบ้านโป่ง ราชบุรี ที่โรงแรมไนน์ริเวอร์ เหมาะสำหรับนักเดินทางสองคนที่กำลังมองหาความหรูหราและความสะดวกสบาย จุดหมายปลายทางที่น่าหลงใหลแห่งนี้มาพร้อมสิ่งอำนวยความสะดวกพิเศษมากมาย เช่น เจ้าหน้าที่อำนวยความสะดวกตลอด 24 ชั่วโมง สระว่ายน้ำในร่ม และร้านอาหารภายในโรงแรม . เพลิดเพลินกับห้องพักที่ตกแต่งอย่างดีด้วยเครื่องปรับอากาศ ระเบียงส่วนตัว และ Wi-Fi ฟรี ผ่อนคลายท่ามกลางสวนเขียวชอุ่มและแม่น้ำที่คดเคี้ยวและสร้างความทรงจำเหนือกาลเวลาที่ Nine River Hotel 
+            <a href="https://www.google.com/maps/place/Nine+River+Hotel/@13.8216553,99.8659381,17z/data=!3m1!4b1!4m10!3m9!1s0x30e31ddedd9cba69:0x7de4e5906a147460!5m3!1s2025-05-15!4m1!1i2!8m2!3d13.8216553!4d99.8659381!16s%2Fg%2F11rc4vn67s?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักราชบุรี2.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักราชบุรี2.3.jpg">
+        </div>
+      </div>
+        <div class="text-box"><h1>โรงแรมเลอเลิศ ราชบุรี</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักราชบุรี3.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 8 88 วิศวเสนานิคม ตำบล หน้าเมือง อำเภอเมืองราชบุรี ราชบุรี 70000 โทร:0646196265 <br> โรงแรมเลอเลิศ ราชบุรี เป็นตัวเลือกที่เหมาะสำหรับนักเดินทางสองคนที่ต้องการสำรวจตลาดที่มีชีวิตชีวาและสถานที่ทางวัฒนธรรมในใจกลางเมืองราชบุรี ตั้งอยู่ในทำเลที่ดีเยี่ยมทำให้สามารถเข้าถึงตลาดน้ำดำเนินสะดวกที่มีชื่อเสียงและสถานที่ท่องเที่ยวใกล้เคียงได้อย่างง่ายดาย เพลิดเพลินกับห้องพักที่กว้างขวางและทันสมัยพร้อมเครื่องปรับอากาศ ฟรี WiFi ระเบียงส่วนตัว และตัวเลือกห้องพักที่สามารถมองเห็นวิวเมือง เริ่มต้นวันใหม่ด้วยอาหารเช้าที่อร่อยส่งตรงถึงห้องพักหรือกาแฟสดที่คาเฟ่ในสถานที่ อย่าพลาดร้านอาหารย่างที่ต้องลองและบุฟเฟ่ต์อาหารเช้าที่ยอดเยี่ยมเพื่อการเข้าพักที่น่าจดจำ โรงแรมนี้เหมาะสำหรับผู้ที่รักการเล่นกอล์ฟ ด้วยการผสมผสานความสะดวกสบาย ความสะดวกสบาย และเสน่ห์ท้องถิ่น
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1%E0%B9%80%E0%B8%A5%E0%B8%AD%E0%B9%80%E0%B8%A5%E0%B8%B4%E0%B8%A8/@13.5253863,99.7972688,17z/data=!3m1!4b1!4m10!3m9!1s0x30e32f7ef43ffff5:0x9d8f00836017f44c!5m3!1s2025-05-15!4m1!1i2!8m2!3d13.5253863!4d99.7972688!16s%2Fg%2F11j2w8vfw8?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักราชบุรี3.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักราชบุรี3.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>โฮเทล วิศมา ราชบุรี</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักราชบุรี4.1.jpg" >
+          <div class="text">
+            ตั้งอยู่ที่ 154 888 ถ. ไกรเพชร ตำบล หน้าเมือง อำเภอเมืองราชบุรี ราชบุรี 70000 โทร:032326555 <br> Centara Life Wisma Hotel Ratchaburi ดำเนินการโดย Centara Hotels & Resorts เป็นตัวเลือกที่เหมาะสำหรับนักเดินทางสองคนที่มองหาความสะดวกสบายสมัยใหม่ในใจกลางเมืองราชบุรีที่มีชีวิตชีวา แขกสามารถเพลิดเพลินกับ WiFi ความเร็วสูงพร้อมการเข้าถึง Netflix และ Disney+ รวมถึงอินเทอร์เน็ตไร้สายฟรีและตู้เซฟในห้องพักเพื่อความสบายใจ ห้องพักบางห้องมีเครื่องปรับอากาศและวิวเมืองที่สวยงาม โรงแรมมีบริการรูมเซอร์วิสตลอด 24 ชั่วโมง ร้านอาหารและบาร์ในสถานที่ และอาหารเช้าที่อร่อย ตั้งอยู่ใกล้กับวัดมหาธาตุวรวิหารและพิพิธภัณฑสถานแห่งชาติราชบุรี ทำให้สามารถสำรวจสถานที่สำคัญทางวัฒนธรรมและแหล่งท่องเที่ยวทางประวัติศาสตร์ได้อย่างง่ายดาย
+            <a href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%8B%E0%B9%87%E0%B8%99%E0%B8%97%E0%B8%B2%E0%B8%A3%E0%B8%B2+%E0%B9%84%E0%B8%A5%E0%B8%9F%E0%B9%8C+%E0%B8%A7%E0%B8%B4%E0%B8%AA%E0%B8%A1%E0%B8%B2+%E0%B8%A3%E0%B8%B2%E0%B8%8A%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5/@13.5379627,99.8139433,17z/data=!3m1!4b1!4m10!3m9!1s0x30e3260041ecccf1:0x13870ed6dbba934b!5m3!1s2025-05-15!4m1!1i2!8m2!3d13.5379627!4d99.8139433!16s%2Fg%2F11jsb1mp67?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักราชบุรี4.2.jpg" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักราชบุรี4.3.webp">
+        </div>
+      </div>
+        <div class="text-box"><h1>โรงแรมสเปซ 59</h1><br>
+        <div class="image-block">
+          <img src="imgตะวันตก/bgที่พักราชบุรี5.1.webp" >
+          <div class="text">
+            ตั้งอยู่ที่ 8, 9 ถนน ท้าวอู่ทอง ตำบล หน้าเมือง อำเภอเมืองราชบุรี ราชบุรี 70000 โทร:032315559 <br> ดื่มด่ำไปกับใจกลางเมืองที่มีชีวิตชีวาของราชบุรีที่โรงแรมสเปซ 59 โรงแรมมีสไตล์แห่งนี้เหมาะสำหรับนักเดินทาง 2 ท่าน ให้บริการห้องพักสะอาดพร้อมการตกแต่งสุดชิค เพลิดเพลินกับอาหารเช้าที่ส่งถึงห้องพักของคุณ หรือซื้อกลับบ้านเพื่อเริ่มต้นวันใหม่อย่างรวดเร็ว เชื่อมต่อกับ ฟรี Wi-Fi และผ่อนคลายบนระเบียงส่วนตัวของคุณ เช่าจักรยานเพื่อสำรวจไฮไลท์ทางวัฒนธรรมและเยี่ยมชมวัดมหาธาตุวรวิหารอันโด่งดังและพิพิธภัณฑสถานแห่งชาติราชบุรี สัมผัสสไตล์และความสะดวกสบายที่โรงแรมสเปซ 59 จองการเข้าพักของคุณตอนนี้!
+            <a href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%81%E0%B8%A3%E0%B8%A1%E0%B8%AA%E0%B9%80%E0%B8%9B%E0%B8%8B+59/@13.5283734,99.822287,17z/data=!3m1!4b1!4m10!3m9!1s0x30e328af47e70b95:0xac4bfa895e9ce3d4!5m3!1s2025-05-15!4m1!1i2!8m2!3d13.5283734!4d99.822287!16s%2Fg%2F11b73jhw7r?entry=ttu&g_ep=EgoyMDI1MDUwNy4wIKXMDSoASAFQAw%3D%3D" style="margin-right: 80%; font-size: 25px;">แผนที่</a>
+          </div>
+        </div>
+        <div class="image-block" style="margin-left: 30%;" >
+          <img src="imgตะวันตก/bgที่พักราชบุรี5.2.webp" >
+        </div>
+        <div class="image-block" style="margin-left: 10%;">
+          <img src="imgตะวันตก/bgที่พักราชบุรี5.3.jpg">
+        </div>
+      </div>
+        <div class="indicators"></div></center>
+      </div>
+
+</body>
+</html>
